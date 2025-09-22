@@ -65,7 +65,7 @@ set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set the build type to Release if not specified
-if (NOT CMAKE_BUILD_TYPE)
+if (NOT DEFINED CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE Release)
 endif ()
 message(STATUS "Build type set to: `" ${CMAKE_BUILD_TYPE} "' ...")
@@ -102,6 +102,7 @@ endif ()
 if (NOT DEFINED BUILD_TESTS)
   set (BUILD_TESTS OFF)  # Default to OFF
 endif ()
+message(STATUS "Build tests set to: `" ${BUILD_TESTS} "' ...")
 
 # -----------------------------------------------------------------------------
 # Configure subdirectories
