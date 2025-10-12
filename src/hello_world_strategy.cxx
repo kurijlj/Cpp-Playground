@@ -53,7 +53,13 @@ HelloWorldStrategy::operator()(
 	CliActions::CliAction const& action
 ) const {
     // Print "Hello, World!" message
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "Hello, World!\n";
+#ifdef USE_DEBUG
+    std::cout << "[DEBUG] in `" << __FILE__
+        << "' at line " << __LINE__
+        << ": Debug info: Executed application `"
+        << action.execName() << "'\n";;
+#endif
 
 	return EXIT_SUCCESS;
 }

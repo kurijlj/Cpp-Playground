@@ -10,6 +10,19 @@
 #
 # ============================================================================
 
+# ============================================================================
+#
+# Most common compiler options for available buld types:
+#
+#   Debug:          -g -O0
+#   Release:        -O3 -DNDEBUG
+#   RelWithDebInfo: -g -O2 -DNDEBUG
+#   MinSizeRel:     -Os -DNDEBUG
+#
+#   Source: https://stackoverflow.com/questions/48754619/what-are-cmake-build-type-debug-release-relwithdebinfo-and-minsizerel
+# ============================================================================
+
+
 # -----------------------------------------------------------------------------
 # Define the minimum required version of CMake
 # -----------------------------------------------------------------------------
@@ -45,6 +58,7 @@ project (
 
 # option (BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option (BUILD_TESTS "Build with tests" OFF)
+option (USE_VECTORIZATION "Build with vectorization support" OFF)
 
 
 # -----------------------------------------------------------------------------
@@ -64,14 +78,14 @@ message(STATUS
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Set the build type to Release if not specified
+# Set the build type to MinSizeRel if not specified
 if (NOT DEFINED CMAKE_BUILD_TYPE)
-  set (CMAKE_BUILD_TYPE Release)
+  set (CMAKE_BUILD_TYPE MinSizeRel)
 endif ()
 message(STATUS "Build type set to: `" ${CMAKE_BUILD_TYPE} "' ...")
 
 # If build type is Debug set for debugging code to compile
-if (CMAKE_BUILD_TYPE MATCHES "Debug")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(STATUS "Use debugging code set to: `ON' ...")
   set(USE_DEBUG ON)
 else ()
@@ -80,19 +94,14 @@ else ()
 endif ()
 
 # Set custom compiler options
-cmake_path(GET CMAKE_CXX_COMPILER STEM compiler)
-if (compiler MATCHES "icx")
-  message (STATUS "Using Intel's oneAPI compiler ...")
-elseif (compiler MATCHES "c\\+\\+" OR compiler MATCHES "gcc")
-  message (STATUS "Using GNU's compiler ...")
-elseif (compiler MATCHES "clang")
-  message (STATUS "Using Clang's compiler ...")
-elseif (compiler MATCHES "cl")
-  message (STATUS "Using Microsoft's compiler ...")
-else ()
-  message (STATUS "Using '" ${compiler} "' compiler ...")
-endif ()
-
+message (STATUS "Setting custom compiler options ...")
+include ("${CMAKE_SOURCE_DIR}/CMake/set_compiler_flags.cmake")
+set_compiler_flags()
+message (STATUS "Custom compiler options set to: `"
+  ${CMAKE_CXX_FLAGS} " "
+  ${CMAKE_CXX_FLAGS_DEBUG}
+  "' ..."
+  )
 
 # -----------------------------------------------------------------------------
 # Check if we are building with the unit tests
