@@ -28,8 +28,8 @@ message (STATUS "Fetching the `clipp' library ...")
 
 FetchContent_Declare(
   clipp
-  GIT_REPOSITORY  https://github.com/muellan/clipp
-  GIT_TAG         4cda95d8c1536c3778773a4468a350a7ea8bcd3f
+  GIT_REPOSITORY  https://github.com/kurijlj/clipp
+  GIT_TAG         f4e395ebb12f6252e08b30ca7c800c92b5b57fbf
 )
 
 add_subdirectory(clipp)

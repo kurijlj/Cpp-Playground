@@ -21,7 +21,8 @@ function (set_compiler_flags)
     # Clang-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
       )
     set (RELEASE_FLAGS
       "-O3 -DNDEBUG -march=native -fvectorize -flto"
@@ -42,6 +43,7 @@ function (set_compiler_flags)
     # GNU-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
+      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
       "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
       )
     set (RELEASE_FLAGS
@@ -63,7 +65,8 @@ function (set_compiler_flags)
     # MSVC-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "/Zi /Od /Ob0 /MDd /W4 /WX /permissive- /RTC1"
+      # "/Zi /Od /Ob0 /MDd /W4 /WX /permissive- /RTC1"
+      "/Zi /Od /Ob0 /MDd /W4 /permissive- /RTC1"
       )
     set (RELEASE_FLAGS
       "/O2 /MD /DNDEBUG /GL /fp:fast"
@@ -86,7 +89,8 @@ function (set_compiler_flags)
     # Intel-specific flags
     # -------------------------------------------------------------------------
     set(DEBUG_FLAGS
-      "-g3 -O0 -Wall -Wextra -Werror -traceback"
+      # "-g3 -O0 -Wall -Wextra -Werror -traceback"
+      "-g3 -O0 -Wall -Wextra -traceback"
       )
     set(RELEASE_FLAGS
       "-O3 -DNDEBUG -xHost -ipo"

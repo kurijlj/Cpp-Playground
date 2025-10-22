@@ -50,10 +50,8 @@
 
 class HelloWorldStrategy : public CliActions::BaseStrategy {
 public:
-	explicit HelloWorldStrategy()
-    { }
-
 	int operator()(CliActions::CliAction const& action) const override;
+	~HelloWorldStrategy() = default;
 };
 
 // End of `hello_world_strategy.hxx'
