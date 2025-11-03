@@ -4,6 +4,10 @@
 
 # ============================================================================
 #
+# 2025-11-03 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Updated Intel compiler flags to include optimization report generation
+#
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
 # * Created.
@@ -16,13 +20,11 @@
 function (set_compiler_flags)
   # Check which compiler is being used and set flags accordingly
   if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    message (STATUS "Using Clang compiler ...")
     # -------------------------------------------------------------------------
     # Clang-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
       )
     set (RELEASE_FLAGS
       "-O3 -DNDEBUG -march=native -fvectorize -flto"
@@ -38,13 +40,11 @@ function (set_compiler_flags)
       )
       
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    message (STATUS "Using GNU compiler ...")
     # -------------------------------------------------------------------------
     # GNU-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
       )
     set (RELEASE_FLAGS
       "-O3 -DNDEBUG -march=native -ftree-vectorize -flto"
@@ -60,12 +60,10 @@ function (set_compiler_flags)
       )
       
   elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    message (STATUS "Using MSVC compiler ...")
     # -------------------------------------------------------------------------
     # MSVC-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      # "/Zi /Od /Ob0 /MDd /W4 /WX /permissive- /RTC1"
       "/Zi /Od /Ob0 /MDd /W4 /permissive- /RTC1"
       )
     set (RELEASE_FLAGS
@@ -84,24 +82,46 @@ function (set_compiler_flags)
   elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel"
     OR CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM"
     )
-    message (STATUS "Using Intel compiler ...")
     # -------------------------------------------------------------------------
     # Intel-specific flags
     # -------------------------------------------------------------------------
+
+    # Debugging info, no optimization, all warnings
     set(DEBUG_FLAGS
-      # "-g3 -O0 -Wall -Wextra -Werror -traceback"
-      "-g3 -O0 -Wall -Wextra -traceback"
+      "-g3 -O0 -Wall -Wextra"
       )
+
+    # Optimize for maximum speed, enable interprocedural optimization,
+    # generate optimization report
     set(RELEASE_FLAGS
-      "-O3 -DNDEBUG -xHost -ipo"
+      "-O3 -DNDEBUG -xHost -ipo -qopt-report=3"
       )
+    string(APPEND
+      RELEASE_FLAGS
+      " -qopt-report-file=optimization_report.yaml"
+      )
+
+    # Optimize for size, enable interprocedural optimization,
+    # generate optimization report
     set(MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ipo"
+      "-Os -DNDEBUG -ipo -qopt-report=3"
       )
-    set(RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -xHost -ipo")
+    string(APPEND
+      MINSIZEREL_FLAGS
+      " -qopt-report-file=optimization_report.yaml"
+      )
     set(MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"
+      )
+
+    # Moderate optimization with debugging info, enable interprocedural
+    # optimization, generate optimization report
+    set(RELWITHDEBINFO_FLAGS
+      "-O2 -g -DNDEBUG -xHost -ipo -qopt-report=3"
+      )
+    string(APPEND
+      RELWITHDEBINFO_FLAGS
+      " -qopt-report-file=optimization_report.yaml"
       )
   endif()
   

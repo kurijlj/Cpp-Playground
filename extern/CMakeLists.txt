@@ -6,6 +6,10 @@
 #
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
+# * Google Test package updated to v1.17.0.
+#
+# 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
 # * Created.
 #
 # ============================================================================
@@ -44,7 +48,7 @@ if (BUILD_TESTS)
 	FetchContent_Declare(
 	  googletest
 		GIT_REPOSITORY https://github.com/google/googletest
-		GIT_TAG        52eb8108c5bdec04579160ae17225d66034bd723
+		GIT_TAG        v1.17.0
 	)
 
 	add_subdirectory(GoogleTest)
