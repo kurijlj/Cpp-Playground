@@ -14,6 +14,7 @@ repositories but are still valuable and interesting to keep.
   - [Introduction](#introduction)
   - [Compile Targets](#compile-targets)
   - [Getting Started](#getting-started)
+  - [Known Issues](#known-issues)
   - [License](#license)
 
 ## Introduction
@@ -61,6 +62,25 @@ code examples that inerest you.
 
 5. **Experiment and Learn:** Tinker with the code, modify parameters, and see
 the effects. Learn by experimentation and observation.
+
+## Known Issues
+
+If compiling with Intel's oneAPI compiler, set -DBUILD_TESTS to OFF, for
+Release, MinSizeRel, and RelWithDebInfo. Otherwise linking fails with the
+message:
+
+```shell
+/usr/bin/ld: /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crt1.o: in function `_start':
+(.text+0x1b): undefined reference to `main'
+/usr/bin/ld: /usr/bin/ld: DWARF error: could not find variable specification at offset 429d
+/tmp/lto-llvm-d920f3.o: in function `_GLOBAL__sub_I_dummy_test.cxx':
+
+...
+
+icpx: error: linker command failed with exit code 1 (use -v to see invocation)
+
+...
+```
 
 ## License
 

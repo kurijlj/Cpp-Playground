@@ -28,3 +28,6 @@
 *.exe
 *.out
 *.app
+
+# Output of CMake configure files
+include/common.hxx

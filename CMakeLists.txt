@@ -4,6 +4,10 @@
 
 # ============================================================================
 #
+# 2025-11-03 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added output messages for compiler options based on build type.
+#
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
 # * Created.
@@ -93,15 +97,41 @@ else ()
   set(USE_DEBUG OFF)
 endif ()
 
-# Set custom compiler options
-message (STATUS "Setting custom compiler options ...")
+# Set C++ compiler options
+message (STATUS "Setting C++ compiler options ...")
 include ("${CMAKE_SOURCE_DIR}/CMake/set_compiler_flags.cmake")
 set_compiler_flags()
-message (STATUS "Custom compiler options set to: `"
-  ${CMAKE_CXX_FLAGS} " "
-  ${CMAKE_CXX_FLAGS_DEBUG}
-  "' ..."
-  )
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_DEBUG}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_RELEASE}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}
+    "' ..."
+    )
+elseif (CMAKE_BUILD_TYPE STREQUAL "MinSizeRel")
+  message (STATUS "C++ compiler options set to: `"
+    ${CMAKE_CXX_FLAGS} " "
+    ${CMAKE_CXX_FLAGS_MINSIZEREL}
+    "' ..."
+    )
+else()
+  message(ERROR "Unknown CMAKE_BUILD_TYPE: `"
+    ${CMAKE_BUILD_TYPE}
+    "' ..."
+    )
+endif()
+
 
 # -----------------------------------------------------------------------------
 # Check if we are building with the unit tests
