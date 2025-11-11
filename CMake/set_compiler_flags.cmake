@@ -86,43 +86,83 @@ function (set_compiler_flags)
     # Intel-specific flags
     # -------------------------------------------------------------------------
 
-    # Debugging info, no optimization, all warnings
-    set(DEBUG_FLAGS
-      "-g3 -O0 -Wall -Wextra"
-      )
+    if (WIN32)  # Flag format differs for Windows platform
+      # Debugging info, no optimization, all warnings
+      set(DEBUG_FLAGS
+        "/debug:all /Od -Wall -Wextra"
+        )
 
-    # Optimize for maximum speed, enable interprocedural optimization,
-    # generate optimization report
-    set(RELEASE_FLAGS
-      "-O3 -DNDEBUG -xHost -ipo -qopt-report=3"
-      )
-    string(APPEND
-      RELEASE_FLAGS
-      " -qopt-report-file=optimization_report.yaml"
-      )
+      # Optimize for maximum speed, enable interprocedural optimization,
+      # generate optimization report
+      set(RELEASE_FLAGS
+        "/O3 -DNDEBUG -xHost -Qopt-report=3"
+        )
+      string(APPEND
+        RELEASE_FLAGS
+        " -Qopt-report-file=optimization_report.yaml"
+        )
 
-    # Optimize for size, enable interprocedural optimization,
-    # generate optimization report
-    set(MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ipo -qopt-report=3"
-      )
-    string(APPEND
-      MINSIZEREL_FLAGS
-      " -qopt-report-file=optimization_report.yaml"
-      )
-    set(MINSIZEREL_LINKER_FLAGS
-      "-Wl,--gc-sections -Wl,--strip-all"
-      )
+      # Optimize for size, enable interprocedural optimization,
+      # generate optimization report
+      set(MINSIZEREL_FLAGS
+        "/Os -DNDEBUG -Qopt-report=3"
+        )
+      string(APPEND
+        MINSIZEREL_FLAGS
+        " -Qopt-report-file=optimization_report.yaml"
+        )
+      set(MINSIZEREL_LINKER_FLAGS
+        "-Wl,--gc-sections -Wl,--strip-all"
+        )
 
-    # Moderate optimization with debugging info, enable interprocedural
-    # optimization, generate optimization report
-    set(RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -xHost -ipo -qopt-report=3"
-      )
-    string(APPEND
-      RELWITHDEBINFO_FLAGS
-      " -qopt-report-file=optimization_report.yaml"
-      )
+      # Moderate optimization with debugging info, enable interprocedural
+      # optimization, generate optimization report
+      set(RELWITHDEBINFO_FLAGS
+        "/O2 /debug:all -DNDEBUG -xHost -Qopt-report=3"
+        )
+      string(APPEND
+        RELWITHDEBINFO_FLAGS
+        " -Qopt-report-file=optimization_report.yaml"
+        )
+    else()
+      # Debugging info, no optimization, all warnings
+      set(DEBUG_FLAGS
+        "-g3 -O0 -Wall -Wextra"
+        )
+
+      # Optimize for maximum speed, enable interprocedural optimization,
+      # generate optimization report
+      set(RELEASE_FLAGS
+        "-O3 -DNDEBUG -xHost -ipo -qopt-report=3"
+        )
+      string(APPEND
+        RELEASE_FLAGS
+        " -qopt-report-file=optimization_report.yaml"
+        )
+
+      # Optimize for size, enable interprocedural optimization,
+      # generate optimization report
+      set(MINSIZEREL_FLAGS
+        "-Os -DNDEBUG -ipo -qopt-report=3"
+        )
+      string(APPEND
+        MINSIZEREL_FLAGS
+        " -qopt-report-file=optimization_report.yaml"
+        )
+      set(MINSIZEREL_LINKER_FLAGS
+        "-Wl,--gc-sections -Wl,--strip-all"
+        )
+
+      # Moderate optimization with debugging info, enable interprocedural
+      # optimization, generate optimization report
+      set(RELWITHDEBINFO_FLAGS
+        "-O2 -g -DNDEBUG -xHost -ipo -qopt-report=3"
+        )
+      string(APPEND
+        RELWITHDEBINFO_FLAGS
+        " -qopt-report-file=optimization_report.yaml"
+        )
+    endif()
   endif()
   
   # Apply the flags to the appropriate CMake variables with PARENT_SCOPE
