@@ -28,7 +28,13 @@ here in the C++ Playground.
 
 - **cli_template_app:** Template for developing C++ CLI applications.
 - **vtk_cone_app:** Demo code how to write simple 3D object viewer using VTK and
-  WebAssembly architecture.
+  WebAssembly architecture. Use:
+
+  ```bash
+  emcmake cmake -G Ninja -S ..\..\repos\Cpp-Playground\ -B . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=icx -DCMAKE_CXX_COMPILER=icx -DVTK_DIR="C:\Users\kurij\Projects\builds\VTK-9.5.2"
+  ```
+
+  to configure build.
 
 ## Getting Started
 
@@ -94,4 +100,4 @@ code remains open-source and accessible to the community.
 This project includes portions of code from Visualization Toolkit, licensed
 under the BSD 3-Clause License.
 Copyright (c) 1993-2015 Ken Martin, Will Schroeder, Bill Lorensen
-Source: https://gitlab.kitware.com/vtk/vtk
+Source: [VTK Gitlab](https://gitlab.kitware.com/vtk/vtk)
