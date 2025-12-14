@@ -41,8 +41,41 @@ target_link_libraries(
   clipp
 )
 
+
+# -----------------------------------------------------------------------------
+# LogService
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `libLogService' target
+message (STATUS "Configuring the `libLogService' target ...")
+
+# Target
+add_library(LogService SHARED)
+
+# Sources
+target_sources(LogService
+  PRIVATE
+    console_log_service.cxx
+    log_service_base.cxx
+
+  INTERFACE
+    FILE_SET interface_headers
+    TYPE HEADERS
+    BASE_DIRS
+      ${CMAKE_CURRENT_SOURCE_DIR}
+    FILES
+      console_log_service.hxx
+      log_service_base.hxx
+)
+
+target_include_directories(
+	LogService PRIVATE
+	${PROJECT_SOURCE_DIR}/include
+	)
+
+
 install(
-  TARGETS cli_template_app
+  TARGETS cli_template_app LogService
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
