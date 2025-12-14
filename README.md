@@ -26,7 +26,9 @@ here in the C++ Playground.
 
 ## Compile Targets
 
-- **Target_Name:** Short description.
+- **cli_template_app:** Template for developing C++ CLI applications.
+- **vtk_cone_app:** Demo code how to write simple 3D object viewer using VTK and
+  WebAssembly architecture.
 
 ## Getting Started
 
@@ -84,6 +86,12 @@ icpx: error: linker command failed with exit code 1 (use -v to see invocation)
 
 ## License
 
-This repository is licensed under the [GNU General Public License
-v3.0](LICENSE), ensuring that the code remains open-source and accessible to the
-community.
+This repository is licensed under the [MIT License](LICENSE), ensuring that the
+code remains open-source and accessible to the community.
+
+## Third-Party Code Attribution
+
+This project includes portions of code from Visualization Toolkit, licensed
+under the BSD 3-Clause License.
+Copyright (c) 1993-2015 Ken Martin, Will Schroeder, Bill Lorensen
+Source: https://gitlab.kitware.com/vtk/vtk
