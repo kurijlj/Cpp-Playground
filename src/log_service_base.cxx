@@ -22,3 +22,5 @@ LogService::String LogService::toString(const LogSeverity severity) {
 
 	return String{"UNKNOWN SEVERITY"};  // This should never happen
 }
+
+// End of 'log_service_base.cxx'

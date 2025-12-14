@@ -57,6 +57,7 @@ target_sources(LogService
   PRIVATE
     console_log_service.cxx
     log_service_base.cxx
+    tracable_log_service.cxx
 
   INTERFACE
     FILE_SET interface_headers
@@ -66,6 +67,7 @@ target_sources(LogService
     FILES
       console_log_service.hxx
       log_service_base.hxx
+      tracable_log_service.hxx
 )
 
 target_include_directories(

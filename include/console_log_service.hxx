@@ -3,7 +3,7 @@
 namespace LogService {
 	class ConsoleLogService: public LogServiceBase {
 	protected:
-		void OnLog(LogSeverity severity, String message) override;
+		void OnLog(const LogSeverity severity, const String message) override;
 	};
 };
 

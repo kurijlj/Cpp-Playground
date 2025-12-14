@@ -22,3 +22,5 @@ LogService::ConsoleLogService::OnLog(
 		<< toString(severity) << " "
 		<< message << "\n";
 }
+
+// End of 'console_log_service.cxx'
