@@ -19,7 +19,7 @@ LogService::ConsoleLogService::OnLog(
 
 	std::cout << time_stamp << " "
 		<< module_name_ << ": "
-		<< toString(severity) << " "
+		<< std::visit(SeverityToString(), severity) << " "
 		<< message << "\n";
 }
 

@@ -1,26 +1,26 @@
-#include <tracable_log_service.hxx>
+#include <traceable_log_service.hxx>
 
 #include <sstream>
 
 LogService::LogRecord
-LogService::TracableLogService::record() const {
+LogService::TraceableLogService::record() const {
 	return log_record_;
 }
 
 void
-LogService::TracableLogService::reset() {
+LogService::TraceableLogService::reset() {
 	log_record_.clear();
 }
 
 void
-LogService::TracableLogService::OnLog(
+LogService::TraceableLogService::OnLog(
 	const LogSeverity severity,
 	const String message
 ) {
 	std::ostringstream msgStream;
 
 	msgStream << module_name_ << ": "
-		<< toString(severity) << " "
+		<< std::visit(SeverityToString(), severity) << " "
 		<< message;
 
 	log_record_.push_back(msgStream.str());

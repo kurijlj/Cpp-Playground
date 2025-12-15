@@ -5,7 +5,7 @@
 namespace LogService {
 	using LogRecord = std::vector<String>;
 
-	class TracableLogService: public LogServiceBase {
+	class TraceableLogService: public LogServiceBase {
 	public:
 		LogRecord record() const;
 		void reset();
@@ -18,4 +18,4 @@ namespace LogService {
 	};
 };
 
-// End of 'tracable_log_service.hxx'
+// End of 'traceable_log_service.hxx'
