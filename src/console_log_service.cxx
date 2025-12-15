@@ -10,15 +10,12 @@ LogService::ConsoleLogService::OnLog(
 	const String message
 ) {
 	time_t current_time = time(nullptr);
-	char time_stamp[30];
-	ctime_s(
-		time_stamp,
-		sizeof time_stamp,
-		&current_time
-	);
+	constexpr size_t buffer_size{30};
+	char time_stamp[buffer_size] {0};
+	ctime_s(time_stamp, buffer_size, &current_time);
+	time_stamp[24] = 0;  // Delete new line char at the end
 
-	std::cout << time_stamp << " "
-		<< module_name_ << ": "
+	std::cout << time_stamp << " " << module_name_ << ": "
 		<< std::visit(SeverityToString(), severity) << " "
 		<< message << "\n";
 }

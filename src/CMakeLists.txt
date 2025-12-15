@@ -18,6 +18,30 @@ message(STATUS "Configuring build targets ...")
 # =============================================================================
 
 # -----------------------------------------------------------------------------
+# binning_study
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `binning_study' target
+message (STATUS "Configuring the `binning_study' target ...")
+
+# Set the source files for the `cli_template_app' target
+add_executable(
+  binning_study
+  binning_study.cxx
+  )
+
+target_include_directories(
+	binning_study PRIVATE
+	${PROJECT_SOURCE_DIR}/include
+	)
+
+target_link_libraries(
+  binning_study PRIVATE
+  LogService
+)
+
+
+# -----------------------------------------------------------------------------
 # cli_template_app
 # -----------------------------------------------------------------------------
 
