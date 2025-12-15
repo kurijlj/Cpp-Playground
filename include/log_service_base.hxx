@@ -97,10 +97,6 @@ namespace LogService {
 
 	class LogServiceBase {
 	public:
-		LogServiceBase() = delete;
-		explicit LogServiceBase(const String& module_name)
-			: module_name_(module_name) { }
-
 		void Emergency(String message) {
 			return OnLog(SeverityLevel::Emergency(), message);
 		}
@@ -131,9 +127,6 @@ namespace LogService {
 			const LogSeverity severity,
 			const String message
 		) = 0;
-
-	protected:
-		String module_name_;
 	};
 };
 

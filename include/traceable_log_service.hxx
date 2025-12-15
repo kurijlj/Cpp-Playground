@@ -7,13 +7,16 @@ namespace LogService {
 
 	class TraceableLogService: public LogServiceBase {
 	public:
-		LogRecord record() const;
+		explicit TraceableLogService(const String& module_name)
+			: module_name_{module_name} { }
+		[[nodiscard]] LogRecord record() const;
 		void reset();
 
 	protected:
 		void OnLog(const LogSeverity severity, const String message) override;
 
 	protected:
+		String module_name_;
 		LogRecord log_record_;
 	};
 };

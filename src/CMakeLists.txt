@@ -50,7 +50,7 @@ target_link_libraries(
 message (STATUS "Configuring the `libLogService' target ...")
 
 # Target
-add_library(LogService SHARED)
+add_library(LogService STATIC)
 
 # Sources
 target_sources(LogService

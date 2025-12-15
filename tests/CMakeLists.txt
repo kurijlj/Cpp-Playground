@@ -22,11 +22,37 @@ include_directories(
 )
 
 # -----------------------------------------------------------------------------
+# dummy_class_test
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `dummy_test' target
+message (STATUS "Configuring the `dummy_class_test' unit tests ...")
+
+# Build the `dummy_test' target
+add_executable(dummy_class_test
+    dummy_class_test.cxx
+)
+
+target_link_libraries(dummy_class_test PUBLIC
+    LogService
+    GTest::gtest_main
+)
+
+# Enable the tests to be discovered by CTest
+include(GoogleTest)
+gtest_discover_tests(
+    dummy_class_test
+    DISCOVERY_MODE PRE_TEST
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:dummy_class_test>
+)
+
+
+# -----------------------------------------------------------------------------
 # dummy_test
 # -----------------------------------------------------------------------------
 
 # Show message that we are building the `dummy_test' target
-message (STATUS "Configuring the `dummy_test' unit test ...")
+message (STATUS "Configuring the `dummy_test' unit tests ...")
 
 # Build the `dummy_test' target
 add_executable(dummy_test
@@ -50,6 +76,32 @@ gtest_discover_tests(
     dummy_test
     DISCOVERY_MODE PRE_TEST
     WORKING_DIRECTORY $<TARGET_FILE_DIR:dummy_test>
+)
+
+
+# -----------------------------------------------------------------------------
+# log_service_test
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `dummy_test' target
+message (STATUS "Configuring the `log_service_test' unit tests ...")
+
+# Build the `dummy_test' target
+add_executable(log_service_test
+    log_service_test.cxx
+)
+
+target_link_libraries(log_service_test PUBLIC
+    LogService
+    GTest::gtest_main
+)
+
+# Enable the tests to be discovered by CTest
+include(GoogleTest)
+gtest_discover_tests(
+    log_service_test
+    DISCOVERY_MODE PRE_TEST
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:log_service_test>
 )
 
 
