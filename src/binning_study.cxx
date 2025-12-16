@@ -17,6 +17,23 @@ using Iterator = Function::iterator;
 
 LogService::ConsoleLogService binning_log{"BINNING_STUDY"};
 
+class LinearTrajectoryGenerator {
+public:
+	LinearTrajectoryGenerator(const float& a, const float& b)
+		: a_{a}, b_{b} { }
+
+	void operator()(const Iterator& begin, const Iterator& end) {
+		for (Iterator current(begin); current != end; current++) {
+			size_t index{current - begin};
+			*current = a_ * index + b_;
+		}
+	}
+
+private:
+	const float a_;
+	const float b_;
+};
+
 class SineTrajectoryGenerator {
 public:
 	SineTrajectoryGenerator(const float& equilibrium, const float& amplitude)
@@ -33,14 +50,6 @@ public:
 private:
 	const float equilibrium_;
 	const float amplitude_;
-};
-
-class FidTrajectoryGenerator {
-public:
-	void operator()(const Iterator& begin, const Iterator& end) {
-		for (Iterator current(begin); current != end; current++) {
-		}
-	}
 };
 
 class GaussianTrajectoryGenerator {
@@ -64,6 +73,90 @@ private:
 	const float amplitude_;
 	const float mu_;
 	const float sigma_;
+};
+
+class SawtoothTrajectoryGenerator {
+public:
+	SawtoothTrajectoryGenerator(
+		const float& amplitude,
+		const float& equilibrium,
+		const float& period
+	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
+	void operator()(const Iterator& begin, const Iterator& end) {
+		for (Iterator current(begin); current != end; current++) {
+			size_t index{current - begin};
+			*current = amplitude_ * (
+				index / period_ - std::floor(index / period_)
+			) - 0.5 * amplitude_ + equilibrium_;
+		}
+	}
+
+private:
+	const float amplitude_;
+	const float equilibrium_;
+	const float period_;
+};
+
+class TriangleTrajectoryGenerator {
+public:
+	TriangleTrajectoryGenerator(
+		const float& amplitude,
+		const float& equilibrium,
+		const float& period
+	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
+	void operator()(const Iterator& begin, const Iterator& end) {
+		for (Iterator current(begin); current != end; current++) {
+			size_t index{current - begin};
+			*current = (amplitude_ / period_)
+				* (period_ - std::abs(
+					std::fmod(index, 2 * period_) - period_
+				)) - 0.5 * amplitude_ + equilibrium_;
+		}
+	}
+
+private:
+	const float amplitude_;
+	const float equilibrium_;
+	const float period_;
+};
+
+class SpikeyTrajectoryGenerator {
+public:
+	SpikeyTrajectoryGenerator(
+		const float& amplitude,
+		const float& equilibrium,
+		const float& period
+	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
+	void operator()(const Iterator& begin, const Iterator& end) {
+		for (Iterator current(begin); current != end; current++) {
+			size_t index{current - begin};
+			float phase = std::fmod(index / period_, 1.0);
+			if (0 > phase) phase += 1.0;
+
+			if  (0.5 > phase) {
+				float x = phase * 2.0;
+				*current = 2.0 * x * x;
+			} else {
+				float x = (phase - 0.5) * 2.0;
+				*current = 2.0 * (1.0 - x) * (1.0 - x);
+			}
+
+			*current = 0.5 * amplitude_ * (*current - 1.0) + equilibrium_;
+		}
+	}
+
+private:
+	const float amplitude_;
+	const float equilibrium_;
+	const float period_;
+};
+
+class FidTrajectoryGenerator {
+public:
+	void operator()(const Iterator& begin, const Iterator& end) {
+		for (Iterator current(begin); current != end; current++) {
+		}
+	}
 };
 
 class BinBySignalStep {
@@ -140,13 +233,17 @@ int main(int argc, char* argv[]) {
 	constexpr size_t data_points{360};
     Function f1(data_points, 0);
     Function f1binned(data_points, 0);
+	LinearTrajectoryGenerator makeLineTrajectory{-1.0, 360.0};
 	SineTrajectoryGenerator makeSineTrajectory{180.0, 180.0};
 	GaussianTrajectoryGenerator makeGaussianTrajectory{360.0, 180.0, 45.0};
-	BinBySignalStep binByTen{10.0};
+	SawtoothTrajectoryGenerator makeSawtoothTrajectory{360.0, 180.0, 180.0};
+	TriangleTrajectoryGenerator makeTriangleTrajectory{360.0, 180.0, 180.0};
+	SpikeyTrajectoryGenerator makeSpikeyTrajectory{360.0, 180.0, 180.0};
+	BinBySignalStep binByTen{1.0};
 
 	binning_log.Info("Starting ...");
 
-	makeGaussianTrajectory(f1.begin(), f1.end());
+	makeSpikeyTrajectory(f1.begin(), f1.end());
 	binByTen(
 		f1.begin(),
 		f1.end(),
