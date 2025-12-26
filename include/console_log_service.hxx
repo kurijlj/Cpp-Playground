@@ -1,3 +1,5 @@
+#pragma once
+
 #include "log_service_base.hxx"
 
 namespace LogService {
@@ -5,9 +7,13 @@ namespace LogService {
 	public:
 		explicit ConsoleLogService(const String& module_name)
 			: module_name_{module_name} { }
+		// ~ConsoleLogService() override = default;
 
 	protected:
-		void OnLog(const LogSeverity severity, const String message) override;
+		void OnLog(
+			const SeverityLevel::Severity& severity,
+			const String message
+		) override;
 
 	protected:
 		String module_name_;

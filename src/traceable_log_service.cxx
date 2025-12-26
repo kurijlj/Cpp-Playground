@@ -14,14 +14,13 @@ LogService::TraceableLogService::reset() {
 
 void
 LogService::TraceableLogService::OnLog(
-	const LogSeverity severity,
+	const SeverityLevel::Severity& severity,
 	const String message
 ) {
 	std::ostringstream msgStream;
 
 	msgStream << module_name_ << ": "
-		<< std::visit(SeverityToString(), severity) << " "
-		<< message;
+		<< severity << " " << message;
 
 	log_record_.push_back(msgStream.str());
 }

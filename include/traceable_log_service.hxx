@@ -1,3 +1,5 @@
+#pragma once
+
 #include <log_service_base.hxx>
 
 #include <vector>
@@ -9,11 +11,16 @@ namespace LogService {
 	public:
 		explicit TraceableLogService(const String& module_name)
 			: module_name_{module_name} { }
+		// ~TraceableLogService() override = default;
+
 		[[nodiscard]] LogRecord record() const;
 		void reset();
 
 	protected:
-		void OnLog(const LogSeverity severity, const String message) override;
+		void OnLog(
+			const SeverityLevel::Severity& severity,
+			const String message
+		) override;
 
 	protected:
 		String module_name_;

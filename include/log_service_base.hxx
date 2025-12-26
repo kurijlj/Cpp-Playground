@@ -1,130 +1,92 @@
+#pragma once
+
+#include <iostream>
 #include <string>
-#include <variant>
 
 namespace LogService {
 	using String = std::string;
-    namespace SeverityLevel {
-        struct Emergency {};  // system is unusable
-        struct Alert {};      // action must be taken immediately
-        struct Critical {};   // critical conditions
-        struct Error {};      // error conditions
-        struct Warning {};    // warning conditions
-        struct Notice {};     // normal but significant condition
-        struct Info {};       // informational
-        struct Debug {};      // debug-level messages
-    };
+	namespace SeverityLevel {
+        class Severity {
+        public:
+            Severity(const int& value, const String identifier)
+                : value_{value}, identifier_{identifier} { }
 
-    struct SeverityValue {
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Emergency&) const {
-			return 0;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Alert&) const {
-			return 1;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Critical&) const {
-			return 2;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Error&) const {
-			return 3;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Warning&) const {
-			return 4;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Notice&) const {
-			return 5;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Info&) const {
-			return 6;
-		}
-        [[nodiscard]] int
-		operator()(const SeverityLevel::Debug&) const {
-			return 7;
-		}
-    };
+            int value() const
+            {
+                return value_;
+            }
+            String string() const
+            {
+                return identifier_; 
+            }
+            friend std::ostream& operator<<(
+				std::ostream& os,
+				const Severity& sv
+			)
+			{
+                os << sv.identifier_;
+                return os;
+            }
+            bool operator==(const Severity& other) const
+            {
+                bool result{false};
 
-    struct SeverityToString {
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Emergency&) const {
-			return String{"EMERGENCY"}; 
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Alert&) const {
-			return String{"ALERT"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Critical&) const {
-			return String{"CRITICAL"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Error&) const {
-			return String{"ERROR"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Warning&) const {
-			return String{"WARNING"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Notice&) const {
-			return String{"NOTICE"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Info&) const {
-			return String{"INFO"};
-		}
-        [[nodiscard]] String
-		operator()(const SeverityLevel::Debug&) const {
-			return String{"DEBUG"};
-		}
-    };
+                if (other.value_ == value_)
+                {
+                    result = true;
+                }
 
-    using LogSeverity = std::variant<
-        SeverityLevel::Emergency,
-        SeverityLevel::Alert,
-        SeverityLevel::Critical,
-        SeverityLevel::Error,
-        SeverityLevel::Warning,
-        SeverityLevel::Notice,
-        SeverityLevel::Info,
-        SeverityLevel::Debug
-    >;  
+                return result;
+            }
+
+        private:
+            const int value_;
+            const String identifier_;
+        };
+
+        const Severity EMERGENCY{0, "EMERGENCY"};  // system is unusable
+		const Severity ALERT{1, "ALERT"};          // action must be taken
+												    // immediately
+		const Severity CRITICAL{2, "CRITICAL"};    // critical conditions
+		const Severity ERROR{3, "ERROR"};          // error conditions
+		const Severity WARNING{4, "WARNING"};      // warning conditions
+		const Severity NOTICE{5, "NOTICE"};        // normal but significant
+												    // condition
+		const Severity INFO{6, "INFO"};            // informational
+		const Severity DEBUG{7, "DEBUG"};          // debug-level messages
+    }; 
 
 	class LogServiceBase {
 	public:
+		// virtual ~LogServiceBase() = 0;
 		void Emergency(String message) {
-			return OnLog(SeverityLevel::Emergency(), message);
+			return OnLog(SeverityLevel::EMERGENCY, message);
 		}
 		void Alert(String message) {
-			return OnLog(SeverityLevel::Alert(), message);
+			return OnLog(SeverityLevel::ALERT, message);
 		}
 		void Critical(String message) {
-			return OnLog(SeverityLevel::Critical(), message);
+			return OnLog(SeverityLevel::CRITICAL, message);
 		}
 		void Error(String message) {
-			return OnLog(SeverityLevel::Error(), message);
+			return OnLog(SeverityLevel::ERROR, message);
 		}
 		void Warning(String message) {
-			return OnLog(SeverityLevel::Warning(), message);
+			return OnLog(SeverityLevel::WARNING, message);
 		}
 		void Notice(String message) {
-			return OnLog(SeverityLevel::Notice(), message);
+			return OnLog(SeverityLevel::NOTICE, message);
 		}
 		void Info(String message) {
-			return OnLog(SeverityLevel::Info(), message);
+			return OnLog(SeverityLevel::INFO, message);
 		}
 		void Debug(String message) {
-			return OnLog(SeverityLevel::Debug(), message);
+			return OnLog(SeverityLevel::DEBUG, message);
 		}
 
 	protected:
 		virtual void OnLog(
-			const LogSeverity severity,
+			const SeverityLevel::Severity& severity,
 			const String message
 		) = 0;
 	};

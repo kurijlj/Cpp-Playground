@@ -6,7 +6,7 @@
 
 void
 LogService::ConsoleLogService::OnLog(
-	const LogSeverity severity,
+	const SeverityLevel::Severity& severity,
 	const String message
 ) {
 	time_t current_time = time(nullptr);
@@ -16,8 +16,7 @@ LogService::ConsoleLogService::OnLog(
 	time_stamp[24] = 0;  // Delete new line char at the end
 
 	std::cout << time_stamp << " " << module_name_ << ": "
-		<< std::visit(SeverityToString(), severity) << " "
-		<< message << "\n";
+		<< severity << " " << message << "\n";
 }
 
 // End of 'console_log_service.cxx'

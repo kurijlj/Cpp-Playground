@@ -24,7 +24,7 @@ message(STATUS "Configuring build targets ...")
 # Show message that we are building the `binning_study' target
 message (STATUS "Configuring the `binning_study' target ...")
 
-# Set the source files for the `cli_template_app' target
+# Set the source files for the `binning_study' target
 add_executable(
   binning_study
   binning_study.cxx
@@ -99,8 +99,40 @@ target_include_directories(
 	)
 
 
+# -----------------------------------------------------------------------------
+# binning_study
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `resource_release_study' target
+message (STATUS "Configuring the `resource_release_study' target ...")
+
+# Set the source files for the `resource_release_study' target
+add_executable(
+  resource_release_study
+  resource_release_study.cxx
+  )
+
+target_include_directories(
+	resource_release_study PRIVATE
+	${PROJECT_SOURCE_DIR}/include
+	)
+
+target_link_libraries(
+  resource_release_study PRIVATE
+  LogService
+)
+
+
+# =============================================================================
+# Install instructions
+# =============================================================================
+
 install(
-  TARGETS cli_template_app LogService
+  TARGETS
+    binning_study
+    cli_template_app
+    LogService
+    resource_release_study
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

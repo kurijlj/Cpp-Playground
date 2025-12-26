@@ -36,15 +36,27 @@ TEST(DummyClassTest, FiveTest) {
 		},
 	};
 
-	DummyClass A{},
+	// LogService::TraceableLogService logger{"DUMMY_CLASS"};
+	DummyClass::TraceableLogServicePointer spLogger
+		= std::make_shared<
+			LogService::TraceableLogService
+		> ("DUMMY_CLASS");
+	DummyClass::dummy_log =	spLogger;
+
+	DummyClass::DummyClass A{},
 		B{"B"},
 		C(B),
-		D(DummyClass{"D"}),
-		E = std::move(DummyClass{"E"}),
+		D(DummyClass::DummyClass{"D"}),
+		E = std::move(DummyClass::DummyClass{"E"}),
 		F{};
 
 	A = B;
 	F = std::move(C);
-
-	EXPECT_EQ(expected, dummy_log.record());
+	
+	EXPECT_EQ(
+		expected,
+		std::get<DummyClass::TraceableLogServicePointer>(
+			DummyClass::dummy_log
+		)->record()
+	);
 }
