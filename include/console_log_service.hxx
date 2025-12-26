@@ -7,7 +7,6 @@ namespace LogService {
 	public:
 		explicit ConsoleLogService(const String& module_name)
 			: module_name_{module_name} { }
-		// ~ConsoleLogService() override = default;
 
 	protected:
 		void OnLog(

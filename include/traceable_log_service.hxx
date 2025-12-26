@@ -11,7 +11,6 @@ namespace LogService {
 	public:
 		explicit TraceableLogService(const String& module_name)
 			: module_name_{module_name} { }
-		// ~TraceableLogService() override = default;
 
 		[[nodiscard]] LogRecord record() const;
 		void reset();

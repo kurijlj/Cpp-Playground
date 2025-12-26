@@ -58,7 +58,6 @@ namespace LogService {
 
 	class LogServiceBase {
 	public:
-		// virtual ~LogServiceBase() = 0;
 		void Emergency(String message) {
 			return OnLog(SeverityLevel::EMERGENCY, message);
 		}
