@@ -36,12 +36,8 @@ TEST(DummyClassTest, FiveTest) {
 		},
 	};
 
-	// LogService::TraceableLogService logger{"DUMMY_CLASS"};
-	DummyClass::TraceableLogServicePointer spLogger
-		= std::make_shared<
-			LogService::TraceableLogService
-		> ("DUMMY_CLASS");
-	DummyClass::dummy_log =	spLogger;
+	LogService::Logger logger = LogService::TraceableLogService{"DUMMY_CLASS"};
+	DummyClass::dummy_logger = logger;
 
 	DummyClass::DummyClass A{},
 		B{"B"},
@@ -55,8 +51,6 @@ TEST(DummyClassTest, FiveTest) {
 	
 	EXPECT_EQ(
 		expected,
-		std::get<DummyClass::TraceableLogServicePointer>(
-			DummyClass::dummy_log
-		)->record()
+		LogService::record(DummyClass::dummy_logger)
 	);
 }

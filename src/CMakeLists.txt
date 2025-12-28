@@ -81,6 +81,7 @@ target_sources(LogService
   PRIVATE
     console_log_service.cxx
     traceable_log_service.cxx
+    log_service.cxx
 
   INTERFACE
     FILE_SET interface_headers
@@ -89,6 +90,7 @@ target_sources(LogService
       ${CMAKE_CURRENT_SOURCE_DIR}
     FILES
       console_log_service.hxx
+      log_service.hxx
       log_service_base.hxx
       traceable_log_service.hxx
 )

@@ -9,32 +9,30 @@ int main(int argc, char* argv[]) {
 	using DataSet = std::vector<DummyClass::DummyClass>;
 	using DataStack = std::vector<DataSet>;
 
-	DummyClass::ConsoleLogServicePointer spLogger
-		= std::make_shared<
-			LogService::ConsoleLogService
-		>("RESOURCE_RELEASE");
-	DummyClass::dummy_log = spLogger;
+	LogService::Logger logger
+		= LogService::ConsoleLogService{"RESOURCE_RELEASE"};
+	DummyClass::dummy_logger = logger;
 
-	spLogger->Debug("Initializing data set 1 ...");
+	LogService::debug(logger, "Initializing data set 1 ...");
 	DataSet ds1;
 	ds1.push_back(std::move(DummyClass::DummyClass{"A"}));
 	ds1.push_back(std::move(DummyClass::DummyClass{"B"}));
 
-	spLogger->Debug("Initializing data set 2 ...");
+	LogService::debug(logger, "Initializing data set 2 ...");
 	DataSet ds2;
 	ds2.push_back(std::move(DummyClass::DummyClass{"C"}));
 	ds2.push_back(std::move(DummyClass::DummyClass{"D"}));
 
-	spLogger->Debug("Initializing data stack ...");
+	LogService::debug(logger, "Initializing data stack ...");
 	DataStack dstk;
 
-	spLogger->Debug("Moving data set 1 to stack ...");
+	LogService::debug(logger, "Moving data set 1 to stack ...");
 	dstk.push_back(std::move(ds1));
 
-	spLogger->Debug("Moving data set 2 to stack ...");
+	LogService::debug(logger, "Moving data set 2 to stack ...");
 	dstk.push_back(std::move(ds2));
 
-	spLogger->Debug("Exit ...");
+	LogService::debug(logger, "Exit ...");
 
 	return EXIT_SUCCESS;
 }

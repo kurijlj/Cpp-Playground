@@ -56,6 +56,8 @@ namespace LogService {
 		const Severity DEBUG{7, "DEBUG"};          // debug-level messages
     }; 
 
+	struct NoLogService {};
+
 	class LogServiceBase {
 	public:
 		void Emergency(String message) {
