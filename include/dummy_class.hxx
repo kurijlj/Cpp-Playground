@@ -7,36 +7,30 @@
 #include <memory>
 
 namespace DummyClass {
-	LogService::Logger default_logger = LogService::NoLogService{};
-	LogService::Logger& dummy_logger = default_logger;
+	LogService::Logger* dummy_logger{nullptr};
+
+	void SetLogger(LogService::Logger* logger) {
+		dummy_logger = logger;
+	}
 
 	class DummyClass {
 	public:
 		DummyClass() : m_Identifier{"None"}
 		{
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Default constructor call"
-			);
+			DebugMessage("->Default constructor call");
 		}
 
 		DummyClass(const LogService::String& identifier)
 			: m_Identifier(identifier)
 		{
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Parametric constructor call"
-			);
+			DebugMessage("->Parametric constructor call");
 		}
 
 		DummyClass(const DummyClass& other)
 		{
 			m_Identifier = other.m_Identifier;
 
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Copy constructor call"
-			);
+			DebugMessage("->Copy constructor call");
 		}
 
 		DummyClass(DummyClass&& other)
@@ -50,18 +44,12 @@ namespace DummyClass {
 	            other.m_Identifier = "None"; 
 	        }
 
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Move constructor call"
-			);
+			DebugMessage("->Move constructor call");
 		}
 
 		~DummyClass ()
 		{
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Destructor call"
-			);
+			DebugMessage("->Destructor call");
 		}
 
 
@@ -69,10 +57,7 @@ namespace DummyClass {
 		{
 			m_Identifier = other.m_Identifier;
 
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Copy assignment call"
-			);
+			DebugMessage("->Copy assignment call");
 
 			return *this;
 		}
@@ -88,12 +73,22 @@ namespace DummyClass {
 	            other.m_Identifier = "None"; 
 	        }
 
-			LogService::debug(
-				dummy_logger,
-				m_Identifier + "->Move assignment call"
-			);
+			DebugMessage("->Move assignment call");
 
 			return *this;
+		}
+
+	protected:
+		void DebugMessage(
+			const LogService::String& message
+		)
+		{
+			if (nullptr != dummy_logger) {
+				LogService::DebugMessage(
+					*dummy_logger,
+					m_Identifier + message
+				);
+			}
 		}
 
 	protected:

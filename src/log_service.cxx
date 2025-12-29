@@ -165,55 +165,55 @@ LogService::Record::operator()(const TraceableLogService& obj) const
 
 
 void
-LogService::emergency(Logger& obj, const String& message)
+LogService::EmergencyMessage(Logger& obj, const String& message)
 {
 	return std::visit(Emergency{message}, obj);
 }
 
 void
-LogService::alert(Logger& obj, const String& message)
+LogService::AlertMessage(Logger& obj, const String& message)
 {
 	return std::visit(Alert{message}, obj);
 }
 
 void
-LogService::critical(Logger& obj, const String& message)
+LogService::CriticalMessage(Logger& obj, const String& message)
 {
 	return std::visit(Critical{message}, obj);
 }
 
 void
-LogService::error(Logger& obj, const String& message)
+LogService::ErrorMessage(Logger& obj, const String& message)
 {
 	return std::visit(Error{message}, obj);
 }
 
 void
-LogService::warning(Logger& obj, const String& message)
+LogService::WarningMessage(Logger& obj, const String& message)
 {
 	return std::visit(Warning{message}, obj);
 }
 
 void
-LogService::notice(Logger& obj, const String& message)
+LogService::NoticeMessage(Logger& obj, const String& message)
 {
 	return std::visit(Notice{message}, obj);
 }
 
 void
-LogService::info(Logger& obj, const String& message)
+LogService::InfoMessage(Logger& obj, const String& message)
 {
 	return std::visit(Info{message}, obj);
 }
 
 void
-LogService::debug(Logger& obj, const String& message)
+LogService::DebugMessage(Logger& obj, const String& message)
 {
 	return std::visit(Debug{message}, obj);
 }
 
 LogService::LogRecord
-LogService::record(const Logger& obj)
+LogService::GetRecord(const Logger& obj)
 {
 	return std::visit(Record{}, obj);
 }

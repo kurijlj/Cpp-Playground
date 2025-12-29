@@ -120,15 +120,15 @@ namespace LogService {
 		) const;
 	};
 
-	void emergency(Logger& obj, const String& message);
-	void alert(Logger& obj, const String& message);
-	void critical(Logger& obj, const String& message);
-	void error(Logger& obj, const String& message);
-	void warning(Logger& obj, const String& message);
-	void notice(Logger& obj, const String& message);
-	void info(Logger& obj, const String& message);
-	void debug(Logger& obj, const String& message);
-	LogRecord record(const Logger& obj);
+	void EmergencyMessage(Logger& obj, const String& message);
+	void AlertMessage(Logger& obj, const String& message);
+	void CriticalMessage(Logger& obj, const String& message);
+	void ErrorMessage(Logger& obj, const String& message);
+	void WarningMessage(Logger& obj, const String& message);
+	void NoticeMessage(Logger& obj, const String& message);
+	void InfoMessage(Logger& obj, const String& message);
+	void DebugMessage(Logger& obj, const String& message);
+	LogRecord GetRecord(const Logger& obj);
 };
 
 // End of file `log_service.hxx'

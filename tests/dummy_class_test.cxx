@@ -37,7 +37,7 @@ TEST(DummyClassTest, FiveTest) {
 	};
 
 	LogService::Logger logger = LogService::TraceableLogService{"DUMMY_CLASS"};
-	DummyClass::dummy_logger = logger;
+	DummyClass::SetLogger(&logger);
 
 	DummyClass::DummyClass A{},
 		B{"B"},
@@ -51,6 +51,6 @@ TEST(DummyClassTest, FiveTest) {
 	
 	EXPECT_EQ(
 		expected,
-		LogService::record(DummyClass::dummy_logger)
+		LogService::GetRecord(DummyClass::dummy_logger)
 	);
 }

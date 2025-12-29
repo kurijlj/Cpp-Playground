@@ -11,28 +11,43 @@ int main(int argc, char* argv[]) {
 
 	LogService::Logger logger
 		= LogService::ConsoleLogService{"RESOURCE_RELEASE"};
-	DummyClass::dummy_logger = logger;
+	DummyClass::SetLogger(&logger);
 
-	LogService::debug(logger, "Initializing data set 1 ...");
+	LogService::DebugMessage(
+		logger,
+		"Initializing data set 1 ..."
+	);
 	DataSet ds1;
 	ds1.push_back(std::move(DummyClass::DummyClass{"A"}));
 	ds1.push_back(std::move(DummyClass::DummyClass{"B"}));
 
-	LogService::debug(logger, "Initializing data set 2 ...");
+	LogService::DebugMessage(
+		logger,
+		"Initializing data set 2 ..."
+	);
 	DataSet ds2;
 	ds2.push_back(std::move(DummyClass::DummyClass{"C"}));
 	ds2.push_back(std::move(DummyClass::DummyClass{"D"}));
 
-	LogService::debug(logger, "Initializing data stack ...");
+	LogService::DebugMessage(
+		logger,
+		"Initializing data stack ..."
+	);
 	DataStack dstk;
 
-	LogService::debug(logger, "Moving data set 1 to stack ...");
+	LogService::DebugMessage(
+		logger,
+		"Moving data set 1 to stack ..."
+	);
 	dstk.push_back(std::move(ds1));
 
-	LogService::debug(logger, "Moving data set 2 to stack ...");
+	LogService::DebugMessage(
+		logger,
+		"Moving data set 2 to stack ..."
+	);
 	dstk.push_back(std::move(ds2));
 
-	LogService::debug(logger, "Exit ...");
+	LogService::DebugMessage(logger, "Exit ...");
 
 	return EXIT_SUCCESS;
 }
