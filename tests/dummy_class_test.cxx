@@ -51,6 +51,6 @@ TEST(DummyClassTest, FiveTest) {
 	
 	EXPECT_EQ(
 		expected,
-		LogService::GetRecord(DummyClass::dummy_logger)
+		DummyClass::GetRecord()
 	);
 }

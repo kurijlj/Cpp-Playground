@@ -1,6 +1,7 @@
 #pragma once
 
 #include "log_service.hxx"
+#include "traceable_log_service.hxx"
 
 #include <optional>
 #include <variant>
@@ -11,6 +12,10 @@ namespace DummyClass {
 
 	void SetLogger(LogService::Logger* logger) {
 		dummy_logger = logger;
+	}
+
+	LogService::LogRecord GetRecord() {
+		return LogService::GetRecord(*dummy_logger);
 	}
 
 	class DummyClass {
