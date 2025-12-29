@@ -145,19 +145,19 @@ LogService::Debug::operator()(TraceableLogService& obj) const
 	return obj.Debug(message_);
 }
 
-LogService::LogRecord
+std::optional<LogService::LogRecord>
 LogService::Record::operator()(const NoLogService& obj) const
 {
-	return LogRecord{};
+	return std::nullopt;
 }
 
-LogService::LogRecord
+std::optional<LogService::LogRecord>
 LogService::Record::operator()(const ConsoleLogService& obj) const
 {
-	return LogRecord{};
+	return std::nullopt;
 }
 
-LogService::LogRecord
+std::optional<LogService::LogRecord>
 LogService::Record::operator()(const TraceableLogService& obj) const
 {
 	return obj.record();
@@ -212,7 +212,7 @@ LogService::DebugMessage(Logger& obj, const String& message)
 	return std::visit(Debug{message}, obj);
 }
 
-LogService::LogRecord
+std::optional<LogService::LogRecord>
 LogService::GetRecord(const Logger& obj)
 {
 	return std::visit(Record{}, obj);

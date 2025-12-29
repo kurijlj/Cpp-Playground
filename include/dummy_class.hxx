@@ -14,7 +14,7 @@ namespace DummyClass {
 		dummy_logger = logger;
 	}
 
-	LogService::LogRecord GetRecord() {
+	std::optional<LogService::LogRecord> GetRecord() {
 		return LogService::GetRecord(*dummy_logger);
 	}
 

@@ -4,6 +4,7 @@
 #include "console_log_service.hxx"
 #include "traceable_log_service.hxx"
 
+#include <optional>
 #include <variant>
 
 namespace LogService {
@@ -113,9 +114,9 @@ namespace LogService {
 	public:
 		Record() = default;
 
-		LogRecord operator()(const NoLogService& obj) const;
-		LogRecord operator()(const ConsoleLogService& obj) const;
-		LogRecord operator()(
+		std::optional<LogRecord> operator()(const NoLogService& obj) const;
+		std::optional<LogRecord> operator()(const ConsoleLogService& obj) const;
+		std::optional<LogRecord> operator()(
 			const TraceableLogService& obj
 		) const;
 	};
@@ -128,7 +129,7 @@ namespace LogService {
 	void NoticeMessage(Logger& obj, const String& message);
 	void InfoMessage(Logger& obj, const String& message);
 	void DebugMessage(Logger& obj, const String& message);
-	LogRecord GetRecord(const Logger& obj);
+	std::optional<LogRecord> GetRecord(const Logger& obj);
 };
 
 // End of file `log_service.hxx'
