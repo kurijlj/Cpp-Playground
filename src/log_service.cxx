@@ -160,8 +160,27 @@ LogService::Record::operator()(const ConsoleLogService& obj) const
 std::optional<LogService::LogRecord>
 LogService::Record::operator()(const TraceableLogService& obj) const
 {
-	return obj.record();
+	return obj.Record();
 }
+
+void
+LogService::Reset::operator()(const NoLogService& obj) const
+{
+	return;
+}
+
+void
+LogService::Reset::operator()(const ConsoleLogService& obj) const
+{
+	return;
+}
+
+void
+LogService::Reset::operator()(TraceableLogService& obj) const
+{
+	return obj.Reset();
+}
+
 
 
 void
@@ -216,6 +235,12 @@ std::optional<LogService::LogRecord>
 LogService::GetRecord(const Logger& obj)
 {
 	return std::visit(Record{}, obj);
+}
+
+void
+LogService::ResetRecord(Logger& obj)
+{
+	return std::visit(Reset{}, obj);
 }
 
 // End of file `log_service.cxx'

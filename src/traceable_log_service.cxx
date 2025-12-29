@@ -3,12 +3,12 @@
 #include <sstream>
 
 LogService::LogRecord
-LogService::TraceableLogService::record() const {
+LogService::TraceableLogService::Record() const {
 	return log_record_;
 }
 
 void
-LogService::TraceableLogService::reset() {
+LogService::TraceableLogService::Reset() {
 	log_record_.clear();
 }
 

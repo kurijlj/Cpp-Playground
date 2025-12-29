@@ -121,6 +121,15 @@ namespace LogService {
 		) const;
 	};
 
+	class Reset {
+	public:
+		Reset() = default;
+
+		void operator()(const NoLogService& obj) const;
+		void operator()(const ConsoleLogService& obj) const;
+		void operator()(TraceableLogService& obj) const;
+	};
+
 	void EmergencyMessage(Logger& obj, const String& message);
 	void AlertMessage(Logger& obj, const String& message);
 	void CriticalMessage(Logger& obj, const String& message);
@@ -130,6 +139,7 @@ namespace LogService {
 	void InfoMessage(Logger& obj, const String& message);
 	void DebugMessage(Logger& obj, const String& message);
 	std::optional<LogRecord> GetRecord(const Logger& obj);
+	void ResetRecord(Logger& obj);
 };
 
 // End of file `log_service.hxx'

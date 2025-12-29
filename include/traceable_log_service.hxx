@@ -12,8 +12,8 @@ namespace LogService {
 		explicit TraceableLogService(const String& module_name)
 			: module_name_{module_name} { }
 
-		[[nodiscard]] LogRecord record() const;
-		void reset();
+		[[nodiscard]] LogRecord Record() const;
+		void Reset();
 
 	protected:
 		void OnLog(
