@@ -1,17 +1,21 @@
 #pragma once
 
-#include <log_service_base.hxx>
+// Component Headers
+#include "LoggingServiceBase.hxx"
 
+// C++ Standard Library
+#include <string>
 #include <vector>
 
-namespace LogService {
+namespace LoggingService {
 	using LogRecord = std::vector<String>;
 
-	class TraceableLogService: public LogServiceBase {
+	class TraceableLoggingService: public LoggingServiceBase {
 	public:
-		explicit TraceableLogService(const String& module_name)
+		explicit TraceableLoggingService(const String& module_name)
 			: module_name_{module_name} { }
 
+        ~TraceableLoggingService() override = default;
 		[[nodiscard]] LogRecord Record() const;
 		void Reset();
 
@@ -27,4 +31,4 @@ namespace LogService {
 	};
 };
 
-// End of 'traceable_log_service.hxx'
+// End of 'TraceableLoggingService.hxx'

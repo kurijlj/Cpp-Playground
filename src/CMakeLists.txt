@@ -1,5 +1,5 @@
 # =============================================================================
-# CMake build script for the `C++ Playground' unit tests
+# CMake build script for the `C++ Playground' components
 # =============================================================================
 
 # ============================================================================
@@ -37,7 +37,7 @@ target_include_directories(
 
 target_link_libraries(
   binning_study PRIVATE
-  LogService
+  LoggingService
 )
 
 
@@ -67,38 +67,10 @@ target_link_libraries(
 
 
 # -----------------------------------------------------------------------------
-# LogService
+# LoggingService
 # -----------------------------------------------------------------------------
 
-# Show message that we are building the `libLogService' target
-message (STATUS "Configuring the `libLogService' target ...")
-
-# Target
-add_library(LogService STATIC)
-
-# Sources
-target_sources(LogService
-  PRIVATE
-    console_log_service.cxx
-    traceable_log_service.cxx
-    log_service.cxx
-
-  INTERFACE
-    FILE_SET interface_headers
-    TYPE HEADERS
-    BASE_DIRS
-      ${CMAKE_CURRENT_SOURCE_DIR}
-    FILES
-      console_log_service.hxx
-      log_service.hxx
-      log_service_base.hxx
-      traceable_log_service.hxx
-)
-
-target_include_directories(
-	LogService PRIVATE
-	${PROJECT_SOURCE_DIR}/include
-	)
+add_subdirectory(LoggingService)
 
 
 # -----------------------------------------------------------------------------
@@ -121,7 +93,7 @@ target_include_directories(
 
 target_link_libraries(
   resource_release_study PRIVATE
-  LogService
+  LoggingService
 )
 
 
@@ -133,7 +105,6 @@ install(
   TARGETS
     binning_study
     cli_template_app
-    LogService
     resource_release_study
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

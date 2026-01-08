@@ -26,7 +26,13 @@ here in the C++ Playground.
 
 ## Compile Targets
 
-- **Target_Name:** Short description.
+- **LoggingService:** A lightweight, extensible C++ logging library featuring
+  syslog-style severity levels (Emergency, Alert, Critical, Error, Warning,
+  Notice, Info, Debug). Provides an abstract `LoggingServiceBase` class with two
+  concrete implementations: `ConsoleLoggingService` for console output and
+  `TraceableLoggingService` for capturing logs in a record (useful for testing).
+  Uses `std::variant` and the visitor pattern for type-safe, flexible logger
+  selection including a `NoLoggingService` option.
 
 ## Getting Started
 

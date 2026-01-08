@@ -4,6 +4,10 @@
 
 # ============================================================================
 #
+# 2026-01-09 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added the `LogServiceTest' target.
+#
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
 # * Created.
@@ -13,13 +17,15 @@
 # Print message to console that we are building the tests targets
 message(STATUS "Configuring unit tests ...")
 
+
 # =============================================================================
 # Build test targets
 # =============================================================================
 
-include_directories(
-    ../include
-)
+# To make unit tests discoverable by CTest, we need to include the GoogleTest
+# CMake module
+include(GoogleTest)
+
 
 # -----------------------------------------------------------------------------
 # dummy_class_test
@@ -29,17 +35,19 @@ include_directories(
 message (STATUS "Configuring the `dummy_class_test' unit tests ...")
 
 # Build the `dummy_test' target
-add_executable(dummy_class_test
+add_executable(
+  dummy_class_test
     dummy_class_test.cxx
 )
 
-target_link_libraries(dummy_class_test PUBLIC
-    LogService
+target_link_libraries(
+  dummy_class_test
+  PUBLIC
+    LoggingService
     GTest::gtest_main
 )
 
 # Enable the tests to be discovered by CTest
-include(GoogleTest)
 gtest_discover_tests(
     dummy_class_test
     DISCOVERY_MODE PRE_TEST
@@ -71,7 +79,6 @@ target_link_libraries(dummy_test PUBLIC
 # )
 
 # Enable the tests to be discovered by CTest
-include(GoogleTest)
 gtest_discover_tests(
     dummy_test
     DISCOVERY_MODE PRE_TEST
@@ -80,28 +87,35 @@ gtest_discover_tests(
 
 
 # -----------------------------------------------------------------------------
-# log_service_test
+# LogServiceTest
 # -----------------------------------------------------------------------------
 
-# Show message that we are building the `dummy_test' target
-message (STATUS "Configuring the `log_service_test' unit tests ...")
+# Show message that we are building the `LogServiceTest` target
+message (STATUS "Configuring the `LogServiceTest' unit tests ...")
 
-# Build the `dummy_test' target
-add_executable(log_service_test
-    log_service_test.cxx
+# Define the `LogServiceTest' target
+add_executable(LogServiceTest)
+
+# Add sources to the `LogServiceTest' target
+target_sources(
+    LogServiceTest
+    PRIVATE
+        LogServiceTest.cxx
 )
 
-target_link_libraries(log_service_test PUBLIC
-    LogService
+# Define the target link libraries for the `LogServiceTest' target
+target_link_libraries(
+  LogServiceTest
+  PUBLIC
+    LoggingService
     GTest::gtest_main
 )
 
 # Enable the tests to be discovered by CTest
-include(GoogleTest)
 gtest_discover_tests(
-    log_service_test
-    DISCOVERY_MODE PRE_TEST
-    WORKING_DIRECTORY $<TARGET_FILE_DIR:log_service_test>
+  LogServiceTest
+  DISCOVERY_MODE PRE_TEST
+  WORKING_DIRECTORY $<TARGET_FILE_DIR:LogServiceTest>
 )
 
 
