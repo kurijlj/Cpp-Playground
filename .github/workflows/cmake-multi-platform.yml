@@ -79,6 +79,7 @@ jobs:
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -DBUILD_SHARED_LIBS:BOOL=${{ matrix.build_shared_libs }}
+        -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF
         -S ${{ github.workspace }}
 
     - name: Build
