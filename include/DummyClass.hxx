@@ -1,21 +1,24 @@
 #pragma once
 
-#include "log_service.hxx"
-#include "traceable_log_service.hxx"
+#include "LoggingServiceBase.hxx"
+#include "TraceableLoggingService.hxx"
+#include "LoggerObject.hxx"
 
 #include <optional>
 #include <variant>
 #include <memory>
 
-namespace DummyClass {
-	LogService::Logger* dummy_logger{nullptr};
+using namespace LoggingService;
 
-	void SetLogger(LogService::Logger* logger) {
+namespace DummyClass {
+	Logger* dummy_logger{nullptr};
+
+	void SetLogger(Logger* logger) {
 		dummy_logger = logger;
 	}
 
-	std::optional<LogService::LogRecord> GetRecord() {
-		return LogService::GetRecord(*dummy_logger);
+	std::optional<LogRecord> GetRecord() {
+		return GetRecord(*dummy_logger);
 	}
 
 	class DummyClass {
@@ -25,7 +28,7 @@ namespace DummyClass {
 			DebugMessage("->Default constructor call");
 		}
 
-		DummyClass(const LogService::String& identifier)
+		DummyClass(const String& identifier)
 			: m_Identifier(identifier)
 		{
 			DebugMessage("->Parametric constructor call");
@@ -63,7 +66,6 @@ namespace DummyClass {
 			m_Identifier = other.m_Identifier;
 
 			DebugMessage("->Copy assignment call");
-
 			return *this;
 		}
 
@@ -85,11 +87,11 @@ namespace DummyClass {
 
 	protected:
 		void DebugMessage(
-			const LogService::String& message
+			const String& message
 		)
 		{
 			if (nullptr != dummy_logger) {
-				LogService::DebugMessage(
+				LoggingService::DebugMessage(
 					*dummy_logger,
 					m_Identifier + message
 				);
@@ -97,8 +99,8 @@ namespace DummyClass {
 		}
 
 	protected:
-		LogService::String m_Identifier;
+		String m_Identifier;
 	};
 };
 
-// End of `dummy_class.hxx'
+// End of `DummyClass.hxx'

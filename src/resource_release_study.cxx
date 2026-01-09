@@ -1,19 +1,28 @@
-#include <dummy_class.hxx>
+#include "DummyClass.hxx"
+
+#include "ConsoleLoggingService.hxx"
+#include "LoggerObject.hxx"
+#include "LoggingServiceBase.hxx"
 
 #include <cstdlib>
 #include <string>
 #include <vector>
 
 int main(int argc, char* argv[]) {
+    // Silent unused parameter warnings
+    (void)argc;
+    (void)argv;
+
+    using namespace LoggingService;
+
 	using String = std::string;
 	using DataSet = std::vector<DummyClass::DummyClass>;
 	using DataStack = std::vector<DataSet>;
 
-	LogService::Logger logger
-		= LogService::ConsoleLogService{"RESOURCE_RELEASE"};
+	Logger logger = ConsoleLoggingService{"RESOURCE_RELEASE"};
 	DummyClass::SetLogger(&logger);
 
-	LogService::DebugMessage(
+	DebugMessage(
 		logger,
 		"Initializing data set 1 ..."
 	);
@@ -21,7 +30,7 @@ int main(int argc, char* argv[]) {
 	ds1.push_back(std::move(DummyClass::DummyClass{"A"}));
 	ds1.push_back(std::move(DummyClass::DummyClass{"B"}));
 
-	LogService::DebugMessage(
+	DebugMessage(
 		logger,
 		"Initializing data set 2 ..."
 	);
@@ -29,25 +38,25 @@ int main(int argc, char* argv[]) {
 	ds2.push_back(std::move(DummyClass::DummyClass{"C"}));
 	ds2.push_back(std::move(DummyClass::DummyClass{"D"}));
 
-	LogService::DebugMessage(
+	DebugMessage(
 		logger,
 		"Initializing data stack ..."
 	);
 	DataStack dstk;
 
-	LogService::DebugMessage(
+	DebugMessage(
 		logger,
 		"Moving data set 1 to stack ..."
 	);
 	dstk.push_back(std::move(ds1));
 
-	LogService::DebugMessage(
+	DebugMessage(
 		logger,
 		"Moving data set 2 to stack ..."
 	);
 	dstk.push_back(std::move(ds2));
 
-	LogService::DebugMessage(logger, "Exit ...");
+	DebugMessage(logger, "Exit ...");
 
 	return EXIT_SUCCESS;
 }

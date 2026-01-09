@@ -28,20 +28,24 @@ include(GoogleTest)
 
 
 # -----------------------------------------------------------------------------
-# dummy_class_test
+# DummyClassTest
 # -----------------------------------------------------------------------------
 
-# Show message that we are building the `dummy_test' target
-message (STATUS "Configuring the `dummy_class_test' unit tests ...")
+# Show message that we are building the `DummyClassTest' target
+message (STATUS "Configuring the `DummyClassTest' unit tests ...")
 
-# Build the `dummy_test' target
-add_executable(
-  dummy_class_test
-    dummy_class_test.cxx
+# Define the `DummyClassTest' target
+add_executable(DummyClassTest)
+
+# Add sources to the `DummyClassTest' target
+target_sources(
+    DummyClassTest
+    PRIVATE
+        DummyClassTest.cxx
 )
 
 target_link_libraries(
-  dummy_class_test
+  DummyClassTest
   PUBLIC
     LoggingService
     GTest::gtest_main
@@ -49,9 +53,9 @@ target_link_libraries(
 
 # Enable the tests to be discovered by CTest
 gtest_discover_tests(
-    dummy_class_test
+    DummyClassTest
     DISCOVERY_MODE PRE_TEST
-    WORKING_DIRECTORY $<TARGET_FILE_DIR:dummy_class_test>
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:DummyClassTest>
 )
 
 

@@ -4,6 +4,10 @@
 
 # ============================================================================
 #
+# 2026-01-09 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added `LoggingService' target as a subdirectory.
+#
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
 # * Created.
@@ -31,13 +35,15 @@ add_executable(
   )
 
 target_include_directories(
-	binning_study PRIVATE
-	${PROJECT_SOURCE_DIR}/include
-	)
+  binning_study
+  PRIVATE
+   ${PROJECT_SOURCE_DIR}/include
+  )
 
 target_link_libraries(
-  binning_study PRIVATE
-  LoggingService
+  binning_study
+  PRIVATE
+    LoggingService
 )
 
 

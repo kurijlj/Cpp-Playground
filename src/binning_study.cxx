@@ -1,4 +1,6 @@
-#include <console_log_service.hxx>
+#include "ConsoleLoggingService.hxx"
+#include "LoggerObject.hxx"
+#include "LoggingServiceBase.hxx"
 
 #include <algorithm>
 #include <cmath>
@@ -11,11 +13,13 @@
 
 // constexpr float pi = 3.14159;
 
+using namespace LoggingService;
+
 using String = std::string;
 using Function = std::vector<float>;
 using Iterator = Function::iterator;
 
-LogService::ConsoleLogService binning_log{"BINNING_STUDY"};
+Logger binning_logger = ConsoleLoggingService{"BINNING_STUDY"};
 
 class LinearTrajectoryGenerator {
 public:
@@ -24,7 +28,7 @@ public:
 
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			*current = a_ * index + b_;
 		}
 	}
@@ -41,7 +45,7 @@ public:
 
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			float radians = 3.14 * static_cast<float> (index) / 180.0;
 			*current = 2 * amplitude_ * std::sin(radians) + equilibrium_;
 		}
@@ -61,7 +65,7 @@ public:
 	) : amplitude_{amplitude}, mu_{mu}, sigma_{sigma} { }
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			*current = amplitude_ * std::exp(
 				-(std::pow(index - mu_, 2))
 					/ (2 * std::pow(sigma_, 2))
@@ -84,7 +88,7 @@ public:
 	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			*current = amplitude_ * (
 				index / period_ - std::floor(index / period_)
 			) - 0.5 * amplitude_ + equilibrium_;
@@ -106,7 +110,7 @@ public:
 	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			*current = (amplitude_ / period_)
 				* (period_ - std::abs(
 					std::fmod(index, 2 * period_) - period_
@@ -129,7 +133,7 @@ public:
 	) : amplitude_{amplitude}, equilibrium_{equilibrium}, period_{period} { }
 	void operator()(const Iterator& begin, const Iterator& end) {
 		for (Iterator current(begin); current != end; current++) {
-			size_t index{current - begin};
+			size_t index{static_cast<size_t>(current - begin)};
 			float phase = std::fmod(index / period_, 1.0);
 			if (0 > phase) phase += 1.0;
 
@@ -164,7 +168,8 @@ public:
 	BinBySignalStep() = default;
 	explicit BinBySignalStep(const float& width) {
 		if (1.0 > width) {
-			binning_log.Error(
+			ErrorMessage(
+                binning_logger,
 				String{"Bin width too small. "}
 				+ String{"Expected >= 1.0, got: "}
 				+ std::to_string(width)
@@ -186,7 +191,7 @@ public:
 		float right_bound = bin + bin_width_ / 2;
 
 		for (Iterator current{beginIn}; current != endIn; current++) {
-			size_t offset{current - beginIn};
+			size_t offset{static_cast<size_t>(current - beginIn)};
 
 			if (left_bound > *current) {
 				// Calculate how many widths aparat are we
@@ -230,6 +235,11 @@ void printFunction(
 }
 
 int main(int argc, char* argv[]) {
+
+    // Silent unused parameter warnings
+    (void) argc;
+    (void) argv;
+
 	constexpr size_t data_points{360};
     Function f1(data_points, 0);
     Function f1binned(data_points, 0);
@@ -241,7 +251,7 @@ int main(int argc, char* argv[]) {
 	SpikeyTrajectoryGenerator makeSpikeyTrajectory{360.0, 180.0, 180.0};
 	BinBySignalStep binByTen{1.0};
 
-	binning_log.Info("Starting ...");
+	InfoMessage(binning_logger, "Starting ...");
 
 	makeSpikeyTrajectory(f1.begin(), f1.end());
 	binByTen(
@@ -256,7 +266,7 @@ int main(int argc, char* argv[]) {
 		f1binned.begin()
 	);
 
-	binning_log.Info("Finished ...");
+	InfoMessage(binning_logger, "Finished ...");
 
 	return EXIT_SUCCESS;
 }

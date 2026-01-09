@@ -1,42 +1,44 @@
-#include <dummy_class.hxx>
+#include "DummyClass.hxx"
 
 #include <gtest/gtest.h>
 
+using namespace LoggingService;
+
 TEST(DummyClassTest, FiveTest) {
-	LogService::LogRecord expected = {
-		LogService::String{
+	LogRecord expected = {
+		String{
 			"DUMMY_CLASS: DEBUG None->Default constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG B->Parametric constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG B->Copy constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG D->Parametric constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG E->Parametric constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG E->Move constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG None->Destructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG None->Default constructor call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG B->Copy assignment call"
 		},
-		LogService::String{
+		String{
 			"DUMMY_CLASS: DEBUG B->Move assignment call"
 		},
 	};
 
-	LogService::Logger logger = LogService::TraceableLogService{"DUMMY_CLASS"};
+	Logger logger = TraceableLoggingService{"DUMMY_CLASS"};
 	DummyClass::SetLogger(&logger);
 
 	DummyClass::DummyClass A{},
@@ -54,3 +56,6 @@ TEST(DummyClassTest, FiveTest) {
 		DummyClass::GetRecord()
 	);
 }
+
+
+// End of `DummyClassTest.cxx'
