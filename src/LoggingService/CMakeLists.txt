@@ -17,7 +17,7 @@ message(STATUS "Configuring the `LoggingService' target ...")
 set(COMPONENT_NAME LoggingService)
 
 # Target ---------------------------------------------------------------------
-add_library(${COMPONENT_NAME} SHARED)
+add_library(${COMPONENT_NAME} STATIC)
 
 # Sources --------------------------------------------------------------------
 target_sources(
