@@ -40,6 +40,13 @@ target_sources(
       ${PROJECT_SOURCE_DIR}/include/LoggingService/TraceableLoggingService.hxx
 )
 
+# Enable automatic symbol export on Windows to generate .lib import library
+set_target_properties(
+  ${COMPONENT_NAME}
+  PROPERTIES
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
 # Target specific include directories ----------------------------------------
 target_include_directories(
   ${COMPONENT_NAME}
