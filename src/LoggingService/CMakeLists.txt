@@ -47,6 +47,15 @@ set_target_properties(
     WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 
+# Disable /GL (Whole Program Optimization) for this target on MSVC because
+# it is incompatible with WINDOWS_EXPORT_ALL_SYMBOLS
+if(MSVC)
+  target_compile_options(${COMPONENT_NAME} PRIVATE
+    $<$<CONFIG:Release>:/GL->
+    $<$<CONFIG:MinSizeRel>:/GL->
+  )
+endif()
+
 # Target specific include directories ----------------------------------------
 target_include_directories(
   ${COMPONENT_NAME}
