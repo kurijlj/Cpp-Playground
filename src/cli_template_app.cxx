@@ -52,7 +52,7 @@
 #include <memory>
 #include <filesystem>
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {    
     namespace fs = std::filesystem;  // Define a shorter alias for filesystem
     using Action = CliActions::CliAction;

@@ -4,6 +4,10 @@
 
 # ============================================================================
 #
+# 2026-01-09 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added project wide include directories.
+#
 # 2025-11-03 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
 # * Added output messages for compiler options based on build type.
@@ -131,6 +135,15 @@ else()
     "' ..."
     )
 endif()
+
+
+# -----------------------------------------------------------------------------
+# Set up project wide include directories
+# -----------------------------------------------------------------------------
+
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include
+)
 
 
 # -----------------------------------------------------------------------------

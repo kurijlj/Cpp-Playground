@@ -35,8 +35,8 @@ jobs:
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         os: [ubuntu-latest, windows-latest]
-        build_type: [Release]
-        build_shred_libs: [ON]
+        build_type: [Release, Debug, RelWithDebInfo, MinSizeRel]
+        build_shared_libs: [ON]
         c_compiler: [gcc, clang, cl]
         include:
           - os: windows-latest
@@ -78,7 +78,8 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -DBUILD_SHRED_LIBS:BOOL=${{ matrix.build_shred_libs }}
+        -DBUILD_SHARED_LIBS:BOOL=${{ matrix.build_shared_libs }}
+        -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF
         -S ${{ github.workspace }}
 
     - name: Build

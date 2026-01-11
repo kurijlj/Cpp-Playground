@@ -1,8 +1,12 @@
 # =============================================================================
-# CMake build script for the `C++ Playground' unit tests
+# CMake build script for the `C++ Playground' components
 # =============================================================================
 
 # ============================================================================
+#
+# 2026-01-09 Ljubomir Kurij <ljubomir_kurij@proton.me>
+#
+# * Added `LoggingService' target as a subdirectory.
 #
 # 2025-09-21 Ljubomir Kurij <ljubomir_kurij@proton.me>
 #
@@ -16,6 +20,39 @@ message(STATUS "Configuring build targets ...")
 # =============================================================================
 # Build targets
 # =============================================================================
+
+# -----------------------------------------------------------------------------
+# LoggingService
+# -----------------------------------------------------------------------------
+
+add_subdirectory(LoggingService)
+
+
+# -----------------------------------------------------------------------------
+# binning_study
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `binning_study' target
+message (STATUS "Configuring the `binning_study' target ...")
+
+# Set the source files for the `binning_study' target
+add_executable(
+  binning_study
+  binning_study.cxx
+  )
+
+target_include_directories(
+  binning_study
+  PRIVATE
+   ${PROJECT_SOURCE_DIR}/include
+  )
+
+target_link_libraries(
+  binning_study
+  PRIVATE
+    LoggingService
+)
+
 
 # -----------------------------------------------------------------------------
 # cli_template_app
@@ -41,8 +78,40 @@ target_link_libraries(
   clipp
 )
 
+
+# -----------------------------------------------------------------------------
+# binning_study
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `resource_release_study' target
+message (STATUS "Configuring the `resource_release_study' target ...")
+
+# Set the source files for the `resource_release_study' target
+add_executable(
+  resource_release_study
+  resource_release_study.cxx
+  )
+
+target_include_directories(
+	resource_release_study PRIVATE
+	${PROJECT_SOURCE_DIR}/include
+	)
+
+target_link_libraries(
+  resource_release_study PRIVATE
+  LoggingService
+)
+
+
+# =============================================================================
+# Install instructions
+# =============================================================================
+
 install(
-  TARGETS cli_template_app
+  TARGETS
+    binning_study
+    cli_template_app
+    resource_release_study
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
