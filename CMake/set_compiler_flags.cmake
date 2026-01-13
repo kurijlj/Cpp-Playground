@@ -24,16 +24,16 @@ function (set_compiler_flags)
     # Clang-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
       )
     set (RELEASE_FLAGS
-      "-O3 -DNDEBUG -march=native -fvectorize -flto -lstdc++"
+      "-O3 -DNDEBUG -march=native -fvectorize -flto"
       )
     set (MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto -lstdc++"
+      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto"
       )
     set (RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -march=native -fvectorize -lstdc++"
+      "-O2 -g -DNDEBUG -march=native -fvectorize"
       )
     set (MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"

@@ -15,7 +15,6 @@ int main(int argc, char* argv[]) {
 
     using namespace LoggingService;
 
-	using String = std::string;
 	using DataSet = std::vector<DummyClass::DummyClass>;
 	using DataStack = std::vector<DataSet>;
 
