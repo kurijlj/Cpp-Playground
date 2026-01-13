@@ -29,6 +29,13 @@ add_subdirectory(LoggingService)
 
 
 # -----------------------------------------------------------------------------
+# DummyClass
+# -----------------------------------------------------------------------------
+
+add_subdirectory(DummyClass)
+
+
+# -----------------------------------------------------------------------------
 # binning_study
 # -----------------------------------------------------------------------------
 
@@ -80,7 +87,7 @@ target_link_libraries(
 
 
 # -----------------------------------------------------------------------------
-# binning_study
+# resource_release_study
 # -----------------------------------------------------------------------------
 
 # Show message that we are building the `resource_release_study' target
@@ -99,6 +106,7 @@ target_include_directories(
 
 target_link_libraries(
   resource_release_study PRIVATE
+  DummyClass
   LoggingService
 )
 
