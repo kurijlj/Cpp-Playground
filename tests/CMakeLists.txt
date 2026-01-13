@@ -47,6 +47,7 @@ target_sources(
 target_link_libraries(
   DummyClassTest
   PUBLIC
+    DummyClass
     LoggingService
     GTest::gtest_main
 )

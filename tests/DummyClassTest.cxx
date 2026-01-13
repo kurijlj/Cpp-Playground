@@ -1,4 +1,4 @@
-#include "DummyClass.hxx"
+#include "DummyClass/DummyClass.hxx"
 
 #include <gtest/gtest.h>
 

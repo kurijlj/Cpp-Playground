@@ -1,8 +1,8 @@
-#include "DummyClass.hxx"
+#include "DummyClass/DummyClass.hxx"
 
-#include "ConsoleLoggingService.hxx"
-#include "LoggerObject.hxx"
-#include "LoggingServiceBase.hxx"
+#include "LoggingService/ConsoleLoggingService.hxx"
+#include "LoggingService/LoggerObject.hxx"
+#include "LoggingService/LoggingServiceBase.hxx"
 
 #include <cstdlib>
 #include <string>
