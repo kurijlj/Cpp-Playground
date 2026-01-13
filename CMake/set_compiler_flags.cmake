@@ -24,16 +24,16 @@ function (set_compiler_flags)
     # Clang-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
       )
     set (RELEASE_FLAGS
-      "-O3 -DNDEBUG -march=native -fvectorize -flto"
+      "-O3 -DNDEBUG -march=native -fvectorize -flto -lstdc++"
       )
     set (MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto"
+      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto -lstdc++"
       )
     set (RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -march=native -fvectorize"
+      "-O2 -g -DNDEBUG -march=native -fvectorize -lstdc++"
       )
     set (MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"
@@ -44,16 +44,17 @@ function (set_compiler_flags)
     # GNU-specific flags
     # -------------------------------------------------------------------------
     set (DEBUG_FLAGS
-      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic"
+      # "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror"
+      "-g3 -O0 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -lstdc++"
       )
     set (RELEASE_FLAGS
-      "-O3 -DNDEBUG -march=native -ftree-vectorize -flto"
+      "-O3 -DNDEBUG -march=native -ftree-vectorize -flto -lstdc++"
       )
     set (MINSIZEREL_FLAGS
-      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto"
+      "-Os -DNDEBUG -ffunction-sections -fdata-sections -flto -lstdc++"
       )
     set (RELWITHDEBINFO_FLAGS
-      "-O2 -g -DNDEBUG -march=native -ftree-vectorize"
+      "-O2 -g -DNDEBUG -march=native -ftree-vectorize -lstdc++"
       )
     set (MINSIZEREL_LINKER_FLAGS
       "-Wl,--gc-sections -Wl,--strip-all"
