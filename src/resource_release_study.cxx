@@ -26,16 +26,16 @@ int main(int argc, char* argv[]) {
 		"Initializing data set 1 ..."
 	);
 	DataSet ds1;
-	ds1.push_back(std::move(DummyClass::DummyClass{"A"}));
-	ds1.push_back(std::move(DummyClass::DummyClass{"B"}));
+	ds1.push_back(DummyClass::DummyClass{"A"});
+	ds1.push_back(DummyClass::DummyClass{"B"});
 
 	DebugMessage(
 		logger,
 		"Initializing data set 2 ..."
 	);
 	DataSet ds2;
-	ds2.push_back(std::move(DummyClass::DummyClass{"C"}));
-	ds2.push_back(std::move(DummyClass::DummyClass{"D"}));
+	ds2.push_back(DummyClass::DummyClass{"C"});
+	ds2.push_back(DummyClass::DummyClass{"D"});
 
 	DebugMessage(
 		logger,
