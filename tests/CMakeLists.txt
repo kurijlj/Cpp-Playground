@@ -92,25 +92,25 @@ gtest_discover_tests(
 
 
 # -----------------------------------------------------------------------------
-# LogServiceTest
+# LoggingServiceTest
 # -----------------------------------------------------------------------------
 
-# Show message that we are building the `LogServiceTest` target
-message (STATUS "Configuring the `LogServiceTest' unit tests ...")
+# Show message that we are building the `LoggingServiceTest` target
+message (STATUS "Configuring the `LoggingServiceTest' unit tests ...")
 
-# Define the `LogServiceTest' target
-add_executable(LogServiceTest)
+# Define the `LoggingServiceTest' target
+add_executable(LoggingServiceTest)
 
-# Add sources to the `LogServiceTest' target
+# Add sources to the `LoggingServiceTest' target
 target_sources(
-    LogServiceTest
+    LoggingServiceTest
     PRIVATE
         LogServiceTest.cxx
 )
 
-# Define the target link libraries for the `LogServiceTest' target
+# Define the target link libraries for the `LoggingServiceTest' target
 target_link_libraries(
-  LogServiceTest
+  LoggingServiceTest
   PUBLIC
     LoggingService
     GTest::gtest_main
@@ -118,9 +118,43 @@ target_link_libraries(
 
 # Enable the tests to be discovered by CTest
 gtest_discover_tests(
-  LogServiceTest
+  LoggingServiceTest
   DISCOVERY_MODE PRE_TEST
-  WORKING_DIRECTORY $<TARGET_FILE_DIR:LogServiceTest>
+  WORKING_DIRECTORY $<TARGET_FILE_DIR:LoggingServiceTest>
+)
+
+
+# -----------------------------------------------------------------------------
+# MonadicTypesTest
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `MonadicTypesTest` target
+message (STATUS "Configuring the `MonadicTypesTest' unit tests ...")
+
+# Define the `MonadicTypesTest' target
+add_executable(MonadicTypesTest)
+
+# Add sources to the `MonadicTypesTest' target
+target_sources(
+    MonadicTypesTest
+    PRIVATE
+        MonadicTypesTest.cxx
+)
+
+# Define the target link libraries for the `LogServiceTest' target
+target_link_libraries(
+  MonadicTypesTest
+  PUBLIC
+    DummyClass
+    LoggingService
+    GTest::gtest_main
+)
+
+# Enable the tests to be discovered by CTest
+gtest_discover_tests(
+  MonadicTypesTest
+  DISCOVERY_MODE PRE_TEST
+  WORKING_DIRECTORY $<TARGET_FILE_DIR:MonadicTypesTest>
 )
 
 

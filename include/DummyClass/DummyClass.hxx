@@ -33,6 +33,10 @@ namespace DummyClass {
 
 		DummyClass& operator=(DummyClass&& other);
 
+        bool operator==(const DummyClass& other) const;
+
+        bool operator==(const DummyClass&& other) const;
+
 	protected:
 		void DebugMessage(const String& message);
 
