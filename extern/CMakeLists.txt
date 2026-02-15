@@ -42,7 +42,7 @@ add_subdirectory(clipp)
 # GoogleTest
 # -----------------------------------------------------------------------------
 
-if (BUILD_TESTS)
+if (BUILD_TESTING)
 	message (STATUS "Fetching the `googletest' library ...")
 
 	FetchContent_Declare(

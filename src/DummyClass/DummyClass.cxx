@@ -74,6 +74,16 @@ namespace DummyClass {
 		return *this;
 	}
 
+    bool DummyClass::operator==(const DummyClass& other) const
+    {
+        return other.m_Identifier == this->m_Identifier;
+    }
+
+    bool DummyClass::operator==(const DummyClass&& other) const
+    {
+        return other.m_Identifier == this->m_Identifier;
+    }
+
 	void DummyClass::DebugMessage(const String& message)
 	{
 		if (nullptr != dummy_logger) {

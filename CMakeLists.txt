@@ -65,7 +65,7 @@ project (
 # -----------------------------------------------------------------------------
 
 # option (BUILD_SHARED_LIBS "Build using shared libraries" ON)
-option (BUILD_TESTS "Build with tests" OFF)
+option (BUILD_TESTING "Build with tests" OFF)
 option (USE_VECTORIZATION "Build with vectorization support" OFF)
 
 
@@ -151,10 +151,10 @@ include_directories(
 # -----------------------------------------------------------------------------
 
 # Check if the tests are enabled
-if (NOT DEFINED BUILD_TESTS)
-  set (BUILD_TESTS OFF)  # Default to OFF
+if (NOT DEFINED BUILD_TESTING)
+  set (BUILD_TESTING OFF)  # Default to OFF
 endif ()
-message(STATUS "Build tests set to: `" ${BUILD_TESTS} "' ...")
+message(STATUS "Build testing set to: `" ${BUILD_TESTING} "' ...")
 
 # -----------------------------------------------------------------------------
 # Configure subdirectories
@@ -164,7 +164,7 @@ add_subdirectory ("${PROJECT_SOURCE_DIR}/include")
 add_subdirectory ("${PROJECT_SOURCE_DIR}/src")
 
 # Add the test files directory if the tests are enabled
-if (BUILD_TESTS)
+if (BUILD_TESTING)
   enable_testing ()
   add_subdirectory ("${PROJECT_SOURCE_DIR}/tests")
 endif ()

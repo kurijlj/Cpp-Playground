@@ -13,6 +13,7 @@ repositories but are still valuable and interesting to keep.
 - [C++ Playground](#c-playground)
   - [Introduction](#introduction)
   - [Compile Targets](#compile-targets)
+  - [Project Header Only Libraries](#project-header-only-libraries)
   - [Getting Started](#getting-started)
   - [Known Issues](#known-issues)
   - [License](#license)
@@ -26,6 +27,10 @@ here in the C++ Playground.
 
 ## Compile Targets
 
+- **cli_template_app:** A minimal CLI application template demonstrating a
+  command-line option parsing framework using the `clipp` library and the
+  strategy pattern for dispatching actions (help, usage, version, and
+  unsupported option handling).
 - **LoggingService:** A lightweight, extensible C++ logging library featuring
   syslog-style severity levels (Emergency, Alert, Critical, Error, Warning,
   Notice, Info, Debug). Provides an abstract `LoggingServiceBase` class with two
@@ -33,6 +38,46 @@ here in the C++ Playground.
   `TraceableLoggingService` for capturing logs in a record (useful for testing).
   Uses `std::variant` and the visitor pattern for type-safe, flexible logger
   selection including a `NoLoggingService` option.
+- **DummyClass:** A library implementing a instrumented dummy class with full
+  value semantics (default, parametric, copy, move constructors and assignment
+  operators). Logs every lifecycle event via the `LoggingService`, making it
+  useful for studying object construction, copy/move behavior, and resource
+  management.
+- **binning_study:** A study program exploring signal binning algorithms.
+  Includes several trajectory generators (linear, sine, Gaussian, sawtooth,
+  triangle, spikey) and a `BinBySignalStep` binner that quantizes continuous
+  signal values into discrete bins of configurable width.
+- **resource_release_study:** A study program demonstrating C++ resource release
+  order and move semantics. Uses `DummyClass` objects in nested `std::vector`
+  containers to observe constructor, destructor, and move operation sequencing
+  during scope exit.
+- **DummyClassTest:** GoogleTest suite verifying `DummyClass` lifecycle
+  semantics (default, parametric, copy, move construction and assignment) by
+  comparing traced log records against expected output using
+  `TraceableLoggingService`.
+- **LoggingServiceTest:** GoogleTest suite for the `LoggingService` library,
+  verifying that all eight syslog-style severity dispatchers (Alert, Critical,
+  Debug, Emergency, Error, Info, Notice, Warning) correctly format and record
+  messages via `TraceableLoggingService`, and that record reset works properly.
+- **MonadicTypesTest:** Comprehensive GoogleTest suite for the `MonadicTypes`
+  library covering `Either` creation, `Result` type, accessors, `validate`,
+  `mbind` (lvalue/rvalue), `fmap`, pipe operator chaining, monad laws
+  (left/right identity, associativity), error propagation, copy/move semantics
+  with `DummyClass` tracing, and stress tests.
+- **dummy_test:** A minimal GoogleTest template with a single basic assertions
+  test case, serving as a starting point for new test files.
+
+## Project Header Only Libraries
+
+- **cli_actions:** A header-only strategy-pattern framework for CLI application
+  actions. Provides a `CliAction` class that dispatches execution to
+  interchangeable strategy objects, with built-in strategies for displaying
+  help, usage, version info, unsupported option warnings, and missing argument
+  errors (integrated with the `clipp` library).
+- **MonadicTypes:** A header-only functional programming library providing an
+  `Either<L, R>` monad and a `Result<T>` type alias for exception-free error
+  handling. Supports monadic bind (`mbind`), functor map (`fmap`), and a pipe
+  operator (`|`) for chaining computations in a railway-oriented style.
 
 ## Getting Started
 
