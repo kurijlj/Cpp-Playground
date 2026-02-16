@@ -83,7 +83,7 @@ message(STATUS
   )
 
 # Set the C++ standard to C++17 and make it required
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 # set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Set the build type to MinSizeRel if not specified
