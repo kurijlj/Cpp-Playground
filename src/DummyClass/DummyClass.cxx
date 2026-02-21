@@ -15,20 +15,20 @@ namespace DummyClass {
 
 	DummyClass::DummyClass() : m_Identifier{"None"}
 	{
-		DebugMessage("->Default constructor call");
+		DebugMessage(" -> Default constructor call");
 	}
 
 	DummyClass::DummyClass(const String& identifier)
 		: m_Identifier(identifier)
 	{
-		DebugMessage("->Parametric constructor call");
+		DebugMessage(" -> Parametric constructor call");
 	}
 
 	DummyClass::DummyClass(const DummyClass& other)
 	{
 		m_Identifier = other.m_Identifier;
 
-		DebugMessage("->Copy constructor call");
+		DebugMessage(" -> Copy constructor call");
 	}
 
 	DummyClass::DummyClass(DummyClass&& other)
@@ -42,19 +42,19 @@ namespace DummyClass {
 			other.m_Identifier = "None"; 
 		}
 
-		DebugMessage("->Move constructor call");
+		DebugMessage(" -> Move constructor call");
 	}
 
 	DummyClass::~DummyClass()
 	{
-		DebugMessage("->Destructor call");
+		DebugMessage(" -> Destructor call");
 	}
 
 	DummyClass& DummyClass::operator=(const DummyClass& other)
 	{
 		m_Identifier = other.m_Identifier;
 
-		DebugMessage("->Copy assignment call");
+		DebugMessage(" -> Copy assignment call");
 		return *this;
 	}
 
@@ -69,7 +69,7 @@ namespace DummyClass {
 			other.m_Identifier = "None"; 
 		}
 
-		DebugMessage("->Move assignment call");
+		DebugMessage(" -> Move assignment call");
 
 		return *this;
 	}
@@ -84,7 +84,12 @@ namespace DummyClass {
         return other.m_Identifier == this->m_Identifier;
     }
 
-	void DummyClass::DebugMessage(const String& message)
+	void DummyClass::WhoIsIt() const
+	{
+		DebugMessage(" -> It's me.");
+	}
+
+	void DummyClass::DebugMessage(const String& message) const
 	{
 		if (nullptr != dummy_logger) {
 			LoggingService::DebugMessage(

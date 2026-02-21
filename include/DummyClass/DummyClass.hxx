@@ -37,8 +37,10 @@ namespace DummyClass {
 
         bool operator==(const DummyClass&& other) const;
 
+		void WhoIsIt() const;
+
 	protected:
-		void DebugMessage(const String& message);
+		void DebugMessage(const String& message) const;
 
 		String m_Identifier;
 	};

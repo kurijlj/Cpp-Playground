@@ -111,6 +111,31 @@ target_link_libraries(
 )
 
 
+# -----------------------------------------------------------------------------
+# either_study
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `either_study' target
+message (STATUS "Configuring the `either_study' target ...")
+
+# Set the source files for the `either_study' target
+add_executable(
+  either_study
+  either_study.cxx
+  )
+
+target_include_directories(
+	either_study PRIVATE
+	${PROJECT_SOURCE_DIR}/include
+	)
+
+target_link_libraries(
+  either_study PRIVATE
+  DummyClass
+  LoggingService
+)
+
+
 # =============================================================================
 # Install instructions
 # =============================================================================

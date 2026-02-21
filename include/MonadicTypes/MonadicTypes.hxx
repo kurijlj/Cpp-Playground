@@ -485,38 +485,38 @@ namespace MonadicTypes {
         return mbind(std::move(either), std::forward<F>(f));
     }
 
-}  // namespace MonadicTypes
+    // -------------------------------------------------------------------------
+    // validate
+    // -------------------------------------------------------------------------
+    // Description:
+    //   Creates a successful Result containing the given value.
+    //   This is a convenience function for creating a Result in the success state.
+    //   It wraps the given value in a Right (success) variant of Result<T>.
+    //
+    // Template parameters:
+    //   T - The type of the value to wrap
+    //
+    // Parameters:
+    //   val - The value to wrap (copied)
+    //
+    // Returns:
+    //   A Result<T> containing the value in the Right position
+    //
+    // Example:
+    //     auto result = validate(42);
+    //     // result is Result<int> containing Right(42)
+    //
+    //     std::string s = "hello";
+    //     auto strResult = validate(s);  // s is copied
+    // -------------------------------------------------------------------------
+    template<typename T>
+    constexpr MonadicTypes::Result<std::decay_t<T>> validate(T&& val) {
+        return MonadicTypes::Result<std::decay_t<T>> (
+            std::in_place_index<1>,
+            std::forward<T> (val)
+        );
+    }
 
-// ----------------------------------------------------------------------------
-// validate
-// ----------------------------------------------------------------------------
-// Description:
-//   Creates a successful Result containing the given value.
-//   This is a convenience function for creating a Result in the success state.
-//   It wraps the given value in a Right (success) variant of Result<T>.
-//
-// Template parameters:
-//   T - The type of the value to wrap
-//
-// Parameters:
-//   val - The value to wrap (copied)
-//
-// Returns:
-//   A Result<T> containing the value in the Right position
-//
-// Example:
-//     auto result = validate(42);
-//     // result is Result<int> containing Right(42)
-//
-//     std::string s = "hello";
-//     auto strResult = validate(s);  // s is copied
-// ----------------------------------------------------------------------------
-template<typename T>
-constexpr MonadicTypes::Result<std::decay_t<T>> validate(T&& val) {
-    return MonadicTypes::Result<std::decay_t<T>> (
-        std::in_place_index<1>,
-        std::forward<T> (val)
-    );
-}
+}  // namespace MonadicTypes
 
 // End of `MonadicTypes.hxx`
