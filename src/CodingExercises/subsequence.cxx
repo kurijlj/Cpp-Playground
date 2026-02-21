@@ -16,6 +16,10 @@ bool isSubsequence(std::string s, std::string t) {
 }
 
 int main(int argc, char* argv[]) {
+    // Prevent compiler from complaining on unused variables
+    (void) argc;
+    (void) argv;
+
     std::string s1{"abc"}, t1{"ahbgdc"},
         s2{"axc"}, t2{"ahbgdc"};
     
