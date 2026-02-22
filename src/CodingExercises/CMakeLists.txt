@@ -15,6 +15,25 @@ message(STATUS "Configuring the `CodingExercises' targets ...")
 
 
 # -----------------------------------------------------------------------------
+# happy_number
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `happy_number' target
+message (STATUS "Configuring the `happy_number' target ...")
+
+# Set the source files for the `happy_number' target
+add_executable(
+  happy_number
+  happy_number.cxx
+  )
+
+target_include_directories(
+  happy_number PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
 # isomorphic_strings
 # -----------------------------------------------------------------------------
 
@@ -29,6 +48,63 @@ add_executable(
 
 target_include_directories(
   isomorphic_strings PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# linkled_list_cycle
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `linked_list_cycle' target
+message (STATUS "Configuring the `linked_list_cycle' target ...")
+
+# Set the source files for the `linked_list_cycle' target
+add_executable(
+  linked_list_cycle
+  linked_list_cycle.cxx
+  )
+
+target_include_directories(
+  linked_list_cycle PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# maximum_depth_of_binary_tree
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `maximum_depth_of_binary_tree' target
+message (STATUS "Configuring the `maximum_depth_of_binary_tree' target ...")
+
+# Set the source files for the `maximum_depth_of_binary_tree' target
+add_executable(
+  maximum_depth_of_binary_tree
+  maximum_depth_of_binary_tree.cxx
+  )
+
+target_include_directories(
+  maximum_depth_of_binary_tree PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# merge_two_sorted_lists
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `merge_two_sorted_lists' target
+message (STATUS "Configuring the `merge_two_sorted_lists' target ...")
+
+# Set the source files for the `merge_two_sorted_lists' target
+add_executable(
+  merge_two_sorted_lists
+  merge_two_sorted_lists.cxx
+  )
+
+target_include_directories(
+  merge_two_sorted_lists PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   )
 
@@ -67,6 +143,25 @@ add_executable(
 
 target_include_directories(
   ransom_note PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# roman_to_integer
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `roman_to_integer' target
+message (STATUS "Configuring the `roman_to_integer' target ...")
+
+# Set the source files for the `roman_to_integer' target
+add_executable(
+  roman_to_integer
+  roman_to_integer.cxx
+  )
+
+target_include_directories(
+  roman_to_integer PRIVATE
   ${PROJECT_SOURCE_DIR}/include
   )
 
@@ -115,6 +210,63 @@ target_link_libraries(
 
 
 # -----------------------------------------------------------------------------
+# summary_ranges
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `summary_ranges' target
+message (STATUS "Configuring the `summary_ranges' target ...")
+
+# Set the source files for the `summary_ranges' target
+add_executable(
+  summary_ranges
+  summary_ranges.cxx
+  )
+
+target_include_directories(
+  summary_ranges PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# two_sum
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `two_sum' target
+message (STATUS "Configuring the `two_sum' target ...")
+
+# Set the source files for the `two_sum' target
+add_executable(
+  two_sum
+  two_sum.cxx
+  )
+
+target_include_directories(
+  two_sum PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
+# valid_parentheses
+# -----------------------------------------------------------------------------
+
+# Show message that we are building the `valid_parentheses' target
+message (STATUS "Configuring the `valid_parentheses' target ...")
+
+# Set the source files for the `valid_parentheses' target
+add_executable(
+  valid_parentheses
+  valid_parentheses.cxx
+  )
+
+target_include_directories(
+  valid_parentheses PRIVATE
+  ${PROJECT_SOURCE_DIR}/include
+  )
+
+
+# -----------------------------------------------------------------------------
 # word_pattern
 # -----------------------------------------------------------------------------
 
@@ -139,11 +291,19 @@ target_include_directories(
 
 install(
   TARGETS
+    happy_number
     isomorphic_strings
+    linked_list_cycle
+    maximum_depth_of_binary_tree
+    merge_two_sorted_lists
     palindrome
     ransom_note
+    roman_to_integer
     subsequence
     substring_study
+    summary_ranges
+    two_sum
+    valid_parentheses
     word_pattern
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
